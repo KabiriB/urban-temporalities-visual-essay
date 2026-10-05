@@ -129,7 +129,7 @@ function updateAccessibleSummary(){
   host.innerHTML=html;status.textContent=text;
   document.getElementById('map').setAttribute('aria-label',text);
 }
-const map=new maplibregl.Map({container:'map',center:[28.06,-26.12],zoom:8.15,pitch:0,bearing:0,style:'https://tiles.openfreemap.org/styles/dark',attributionControl:true});map.dragRotate.disable();map.touchZoomRotate.disableRotation();map.addControl(new maplibregl.NavigationControl({showCompass:false}),'bottom-right');
+const map=new maplibregl.Map({container:'map',center:[28.06,-26.12],zoom:8.15,pitch:0,bearing:0,style:'https://tiles.openfreemap.org/styles/dark',attributionControl:{compact:true}});map.dragRotate.disable();map.touchZoomRotate.disableRotation();map.addControl(new maplibregl.NavigationControl({showCompass:false}),'bottom-right');
 function boundaryMeta(which){return C().boundaryMeta[which]}
 function setBoundaryPaintForMode(){
   const life=lifeOn;
