@@ -39,9 +39,8 @@ button:focus-visible,summary:focus-visible,.maplibregl-canvas:focus-visible{outl
   .life-head{align-items:flex-start}
   .life-name{font-size:15px}
   #lifeBtn{padding:9px 12px;min-height:44px;white-space:nowrap}
-  .life-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-  .life-tabs::-webkit-scrollbar{display:none}
-  .life-tabs button{flex:0 0 78px;min-height:44px;font-size:9px}
+  .life-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;overflow:visible;padding-bottom:2px}
+  .life-tabs button{min-width:0;min-height:44px;padding:8px 2px;font-size:8px}
   .note{display:none}
   .a11y-summary{margin-top:8px}
   .legend,.site-note,.badge{display:none}
