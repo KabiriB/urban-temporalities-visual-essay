@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The City Does Not Contain the Life — Urban Temporalities</title>
+<meta name="description" content="A visual essay from Urban Temporalities, following urban lives across Accra, Johannesburg and Nairobi." />
+<meta name="theme-color" content="#071011" />
+<meta name="date" content="2026-10" />
+<link rel="preload" as="image" href="assets/hero-accra.jpg" fetchpriority="high" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+:root{
+  --bg:#071011; --bg2:#0a1516; --ink:#f5f1e8; --muted:#aeb9b7; --line:#244040;
+  --gold:#d9a646; --gold2:#efc66c; --teal:#58c7b7; --blue:#9ec2ff; --paper:#eee7dc;
+  --serif: Georgia, 'Times New Roman', serif; --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.72;text-rendering:optimizeLegibility}
+a{color:inherit}
+button,a,summary{touch-action:manipulation}
+a:focus-visible,button:focus-visible,summary:focus-visible,iframe:focus-visible{outline:3px solid var(--gold2);outline-offset:4px}
+.skip-link{position:fixed;left:12px;top:12px;z-index:9999;background:#fff7e8;color:#101718;padding:10px 14px;border-radius:4px;text-decoration:none;font-weight:750;transform:translateY(-180%);transition:transform .18s ease}.skip-link:focus{transform:none}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+img{max-width:100%;display:block}
+.container{width:min(1120px,calc(100% - 40px));margin:auto}
+.prose{width:min(760px,calc(100% - 40px));margin-inline:auto}
+.kicker{font:700 12px/1.2 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold2)}
+h1,h2,h3,.display{font-family:var(--serif);font-weight:400;letter-spacing:-.025em}
+h1{font-size:clamp(54px,7.4vw,118px);line-height:.9;margin:.18em 0 .26em;max-width:980px}
+h2{font-size:clamp(38px,5vw,67px);line-height:1.02;margin:0 0 .55em}
+h3{font-size:25px;margin:0 0 .5em}
+p{margin:0 0 1.25em}
+.lede{font:400 clamp(20px,2.1vw,30px)/1.45 var(--serif);max-width:780px;color:#eee8de}
+.rule{width:74px;height:1px;background:var(--gold);margin:26px 0}
+.quote-line{font:400 clamp(30px,4.3vw,62px)/1.12 var(--serif);letter-spacing:-.025em;margin:60px auto;max-width:930px;text-align:center}
+.quote-line em{color:var(--gold2);font-style:normal}
+.section{padding:110px 0}
+.section.compact{padding:78px 0}
+.hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:#050909}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(2,8,8,.98) 0%,rgba(2,8,8,.88) 34%,rgba(2,8,8,.30) 63%,rgba(2,8,8,.08) 100%),linear-gradient(0deg,rgba(2,8,8,.9) 0%,rgba(2,8,8,0) 46%),url('assets/hero-accra.jpg');background-size:cover;background-position:center 43%;transform:scale(1.01)}
+.hero-content{position:relative;z-index:2;width:min(1240px,calc(100% - 56px));margin:0 auto;padding:70px 0 72px}
+.hero-sub{max-width:650px;font:400 clamp(21px,2vw,29px)/1.45 var(--serif);color:#f2ede4}
+.scroll-cue{display:inline-flex;gap:11px;align-items:center;margin-top:32px;color:#bfc8c6;font-size:12px;letter-spacing:.15em;text-transform:uppercase}.scroll-cue span{width:52px;height:1px;background:var(--gold)}
+.reflection{background:linear-gradient(180deg,#071011,#081415)}
+.reflection .prose p:first-of-type:first-letter{float:left;font:400 78px/.77 var(--serif);padding:12px 12px 0 0;color:var(--gold2)}
+.photo-band{min-height:65vh;background:url('assets/taxi-rank.jpg') center/cover no-repeat;position:relative;display:flex;align-items:end}
+.photo-band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,10,.08),rgba(4,10,10,.15) 48%,rgba(4,10,10,.86))}
+.photo-band .caption{position:relative;z-index:2;width:min(1120px,calc(100% - 40px));margin:0 auto 30px;color:#e9efed;font-size:12px;letter-spacing:.07em}
+.edges{background:#081415}
+.edge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.edge-card{border:1px solid var(--line);background:rgba(8,25,25,.56);padding:30px 27px;min-height:250px;position:relative;overflow:hidden}
+.edge-card::before{content:"";position:absolute;left:0;top:0;right:0;height:2px;background:var(--accent,var(--gold))}
+.edge-card .num{font:700 11px/1 var(--sans);letter-spacing:.18em;color:var(--accent,var(--gold));margin-bottom:28px}.edge-card p{font-size:15px;color:#c7d1cf}.edge-card h3{font-size:30px}
+.edge-card.admin{--accent:var(--gold)}.edge-card.built{--accent:var(--teal)}.edge-card.functional{--accent:var(--blue)}
+.atlas-wrap{padding:82px 0 110px;background:#050a0b;border-top:1px solid #142526;border-bottom:1px solid #142526}
+.atlas-head{display:flex;justify-content:space-between;gap:30px;align-items:end;width:min(1280px,calc(100% - 36px));margin:0 auto 24px}.atlas-head p{max-width:680px;color:#b5c0be;margin:0}.atlas-title{font:400 clamp(36px,4.2vw,60px)/1 var(--serif)}
+.atlas-shell{width:min(1480px,calc(100% - 20px));height:min(910px,88vh);min-height:650px;margin:auto;border:1px solid #203536;background:#020606;box-shadow:0 30px 90px rgba(0,0,0,.35);position:relative}
+.atlas-shell iframe{width:100%;height:100%;border:0;background:#020606}
+.open-full{position:absolute;right:16px;top:16px;z-index:3;background:rgba(4,15,15,.9);border:1px solid #345050;border-radius:999px;padding:9px 14px;text-decoration:none;font:inherit;font-size:12px;letter-spacing:.05em;color:#f4efe5;cursor:pointer}
+.interaction-tip{width:min(960px,calc(100% - 40px));margin:20px auto 0;display:flex;gap:12px;color:#94a3a0;font-size:13px}.interaction-tip b{color:var(--gold2);font-weight:600}
+.life{background:linear-gradient(180deg,#071011,#091617)}
+.dimensions{margin:52px auto 25px;display:grid;gap:0;border-top:1px solid var(--line);max-width:970px}.dimension{display:grid;grid-template-columns:150px 1fr 110px;gap:26px;padding:22px 0;border-bottom:1px solid var(--line);align-items:baseline}.dimension b{font:400 27px/1.2 var(--serif)}.dimension span{color:#bac6c3}.dimension small{text-align:right;color:var(--gold2);letter-spacing:.13em;text-transform:uppercase;font-size:10px}
+.quant{background:#0a1516;position:relative;overflow:hidden}.quant::before{content:"";position:absolute;inset:0;background:url('assets/accra-aerial.jpg') center/cover;opacity:.17;filter:saturate(.9) contrast(1.03)}.quant>.container{position:relative}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:46px 0 50px}.stat{border-top:1px solid var(--gold);padding:20px 10px 25px}.stat strong{font:400 clamp(60px,7vw,100px)/.9 var(--serif);color:var(--paper);display:block}.stat span{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#aeb9b7}.mega-stat{display:grid;grid-template-columns:minmax(380px,.9fr) minmax(0,1.35fr);gap:64px;align-items:center;border-top:1px solid var(--line);padding-top:50px}.mega-stat > strong{font:400 clamp(76px,8.8vw,132px)/.86 var(--serif);color:var(--gold2);white-space:nowrap;letter-spacing:-.045em}.mega-stat p strong{font:inherit;line-height:inherit;color:var(--gold2);white-space:normal;letter-spacing:inherit}.mega-stat p{font:400 clamp(21px,2vw,29px)/1.5 var(--serif);margin:0;max-width:760px}
+.field-photo{display:grid;grid-template-columns:1.05fr .95fr;min-height:720px;background:#061011}.field-photo .image{background:url('assets/nairobi-kayole-street.jpg') center/cover no-repeat;min-height:650px}.field-photo .text{display:flex;align-items:center;padding:70px max(36px,7vw)}.field-photo .text-inner{max-width:600px}.field-photo .pull{font:400 clamp(34px,4.4vw,62px)/1.08 var(--serif);margin-top:30px;color:#f1ece3}
+.routes{background:#081415}.routes .two-col{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px}.routes .aside{border-left:1px solid var(--gold);padding-left:24px;color:#adb9b6;font-size:14px;align-self:start}.routes .aside b{display:block;color:var(--gold2);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}
+.closing{min-height:95svh;position:relative;display:flex;align-items:flex-end;background:#050909;overflow:hidden}.closing::before{content:"";position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(2,8,8,.90) 0%,rgba(2,8,8,.76) 34%,rgba(2,8,8,.42) 58%,rgba(2,8,8,.12) 100%),linear-gradient(0deg,rgba(3,8,8,.95) 0%,rgba(3,8,8,.66) 34%,rgba(3,8,8,.28) 68%,rgba(3,8,8,.14) 100%),url('assets/nairobi-motion.jpg');background-position:center;background-size:cover;filter:saturate(.82) contrast(1.02)}.closing-content{position:relative;z-index:2;width:min(1120px,calc(100% - 44px));margin:0 auto;padding:96px 0 66px}.closing-copy{max-width:860px;text-shadow:0 2px 14px rgba(0,0,0,.76)}.closing-context{max-width:760px;margin:0;color:#dde4e1;font:400 clamp(16px,1.45vw,20px)/1.58 var(--sans)}.closing-bridge{max-width:720px;margin:44px 0 0;font:400 clamp(26px,2.7vw,39px)/1.25 var(--serif);color:var(--paper)}.closing .final{font:400 clamp(38px,4.8vw,66px)/1.02 var(--serif);margin:54px 0 8px;letter-spacing:-.02em}.closing .final-line{display:block}.closing .final-gold{display:block;color:var(--gold2);margin-top:12px}
+.methods{background:#060e0f;padding:56px 0;color:#9caaa7;font-size:13px}.methods details{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0}.methods summary{cursor:pointer;color:#d9dfdc;font-weight:650;letter-spacing:.08em;text-transform:uppercase;font-size:11px}.methods-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;padding-top:22px}.methods p{margin-bottom:.8em}
+.credit{display:flex;justify-content:space-between;gap:25px;padding-top:35px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#768784}
+.byline{margin-top:22px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#d6dedb}.byline strong{color:var(--gold2);font-weight:700}.photo-credit{position:absolute;right:18px;bottom:14px;z-index:3;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,241,232,.78);text-shadow:0 1px 8px rgba(0,0,0,.8)}.photo-band .photo-credit{bottom:14px}.closing .photo-credit{bottom:14px}.field-photo .image{position:relative}.field-photo .image::after{content:"Photograph · Loren Landau";position:absolute;left:16px;bottom:14px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.reveal{opacity:1;transform:none}.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}.js .reveal.visible{opacity:1;transform:none}
+@media (max-width:900px){
+  body{font-size:16px}
+  .hero::before{background-image:linear-gradient(0deg,rgba(2,8,8,.96),rgba(2,8,8,.38) 65%,rgba(2,8,8,.08)),url('assets/hero-accra.jpg');background-position:58% center}
+  .hero-content{padding-bottom:50px}
+  .edge-grid,.stats{grid-template-columns:1fr}
+  .edge-card{min-height:0}
+  .atlas-shell{height:82vh;min-height:570px}
+  .atlas-head{display:block}
+  .atlas-head p{margin-top:15px}
+  .dimension{grid-template-columns:1fr 80px}
+  .dimension span{grid-column:1 / -1}
+  .mega-stat{grid-template-columns:1fr;gap:28px}
+  .field-photo{grid-template-columns:1fr}
+  .field-photo .image{min-height:70vh}
+  .routes .two-col,.methods-grid{grid-template-columns:1fr}
+  .routes .aside{margin-top:10px}
+  .closing::before{background-position:60% center}
+}
+@media (max-width:600px){
+  .container,.prose{width:min(calc(100% - 28px),760px)}
+  .hero{min-height:92svh}
+  .hero-content{width:calc(100% - 28px);padding:52px 0 46px}
+  h1{font-size:clamp(48px,15vw,72px);line-height:.93}
+  h2{font-size:clamp(36px,10.5vw,50px)}
+  .hero-sub{font-size:20px;line-height:1.4}
+  .section{padding:76px 0}
+  .quote-line{margin:44px auto}
+  .atlas-wrap{padding:55px 0 75px}
+  .atlas-head{width:calc(100% - 28px)}
+  .atlas-shell{width:100%;height:78svh;min-height:620px;border-left:0;border-right:0}
+  .open-full{top:10px;right:10px;padding:11px 14px;background:rgba(4,15,15,.96)}
+  .interaction-tip{width:calc(100% - 28px);display:block}
+  .dimension{grid-template-columns:1fr auto;gap:8px 18px}
+  .dimension b{font-size:25px}
+  .field-photo .image{min-height:62svh;background-position:52% center}
+  .field-photo .text{padding:55px 20px}
+  .stats{margin-top:30px}
+  .stat strong{font-size:76px}
+  .mega-stat > strong{font-size:clamp(72px,24vw,105px)}
+  .closing{min-height:100svh}
+  .closing-content{width:calc(100% - 28px);padding:80px 0 56px}
+  .closing .final{font-size:clamp(36px,11vw,54px)}
+  .closing-context{font-size:16px;line-height:1.52}
+  .closing-bridge{font-size:clamp(25px,7vw,34px);margin-top:34px}
+  .closing .final{margin-top:42px}
+  .credit{display:block;line-height:1.55}
+  .credit div+div{margin-top:12px}
+  .photo-credit{right:12px;bottom:10px;font-size:9px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .skip-link{transition:none}
+}
+
+.micro-note{font:500 12px/1.55 var(--sans);color:#91a09d;margin-top:10px;max-width:620px}.qual-source{margin-top:14px;color:#a6b1ae;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.methods strong{color:#d9dfdc}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="hero" aria-labelledby="essay-title">
+  <div class="hero-content">
+    <div class="kicker">Urban Temporalities · 2018–2026</div>
+    <h1 id="essay-title">The City Does Not Contain the Life</h1>
+    <div class="hero-sub">What eight years of following urban lives across Accra, Johannesburg and Nairobi taught us about the edges of the city.</div>
+    <div class="scroll-cue"><span></span> A visual essay</div>
+    <div class="byline">By <strong>Kabiri N. Bule</strong> · <time datetime="2026-10">October 2026</time></div>
+  </div>
+  <div class="photo-credit">Photograph · Loren Landau</div>
+  <p class="sr-only">Opening field photograph from the Urban Temporalities project showing women walking through an Accra street.</p>
+</header>
+
+<main id="main-content">
+<section class="section reflection">
+  <div class="prose reveal">
+    <div class="kicker">2018 · The question</div>
+    <div class="rule"></div>
+    <p>In 2018, we began with a question. We wanted to understand what mobility does to urban life: to belonging, relationships, political community and the ways people imagine their futures. Our proposal imagined following people’s multiple sites of engagement within and beyond Accra, Johannesburg and Nairobi, and finding ways to make those connections visible.</p>
+    <p>We did not know what the answer would look like. The project changed as it unfolded: methods shifted, COVID intervened, and the cities repeatedly resisted the neat conceptual containers we brought to them.</p>
+    <p>Eight years later, one question has stayed with me:</p>
+    <p class="lede"><strong>Can an urban life really be contained by the city in which it is lived?</strong></p>
+    <p>Increasingly, our answer is: <strong>not necessarily.</strong></p>
+  </div>
+</section>
+
+<section class="photo-band" role="img" aria-label="Aerial photograph of a busy urban transport interchange, viewed from above">
+  <div class="caption">Urban circulation, viewed from above. The visible city already exceeds any single story of its edge.</div><div class="photo-credit">Image · Envato Elements</div>
+</section>
+
+<section class="section edges">
+  <div class="container reveal">
+    <div class="kicker">Where does the city end?</div>
+    <h2>Before locating the life, we had to decide what we meant by “the city”.</h2>
+    <div class="prose" style="margin-left:0">
+      <p>One answer is administrative: the legal jurisdiction through which local government operates. Another is physical: buildings, roads and settlements often continue across those legal lines. Then there is the wider urban system of interaction connecting places through work, movement and economic activity.</p>
+      <p>These are not competing attempts to discover the one true city. They answer different questions.</p>
+    </div>
+    <div class="edge-grid">
+      <article class="edge-card admin"><div class="num">01 · JURISDICTION</div><h3>Administrative city</h3><p>The legal city. It tells us where formal local-government responsibility begins and ends: services, elections, planning and accountability.</p></article>
+      <article class="edge-card built"><div class="num">02 · MORPHOLOGY</div><h3>Built-up city</h3><p>The continuous physical urban landscape. It follows settlement and urban fabric rather than a municipal line.</p></article>
+      <article class="edge-card functional"><div class="num">03 · FUNCTION</div><h3>Functional city-region</h3><p>A harmonised model of the wider urban system of interaction. In this essay we use a 2015 modelled functional urban area for cross-city comparison.</p></article>
+    </div>
+    <div class="quote-line">Nothing about the neighbourhood has changed.<br><em>The boundary has.</em></div>
+  </div>
+</section>
+
+<section class="atlas-wrap" id="atlas">
+  <div class="atlas-head">
+    <div><div class="kicker">Interactive centrepiece</div><div class="atlas-title">Atlas of Urban Elsewheres</div></div>
+    <p id="atlas-description">Begin close to the city. Change its edge. Then choose <strong>Locate the life</strong>. Follow a connection, then move between Movement, Household, People, Support and Future. The curves show relational reach, not reconstructed travel routes.</p>
+  </div>
+  <div class="atlas-shell">
+    <a class="open-full" href="atlas.html" target="_blank" rel="noopener" aria-label="Open Atlas of Urban Elsewheres full experience in a new tab">Open full experience ↗</a>
+    <iframe src="atlas.html" title="Atlas of Urban Elsewheres interactive map" aria-describedby="atlas-description" loading="lazy"></iframe>
+  </div>
+  <div class="interaction-tip"><b>Try this:</b> choose <strong>Locate the life</strong>, hover or tap a node, then change the dimension of the life. Keep one layer fixed and change the city.</div>
+</section>
+
+<section class="section life">
+  <div class="container reveal">
+    <div class="kicker">Then we located the life</div>
+    <h2>A person does not have one geography.</h2>
+    <div class="prose" style="margin-left:0">
+      <p>The people we studied were giving us another map. The survey asked not only where someone came from and lived now, but where movement histories, households, recent connections, support and imagined futures reached.</p>
+      <p>Change the dimension of the life and the geography changes. Movement, household, people, support and future do not necessarily coincide. Yet all belong to the same life.</p>
+    </div>
+    <div class="dimensions">
+      <div class="dimension"><b>Movement</b><span>Places lived in and moved through before the present.</span><small>Past</small></div>
+      <div class="dimension"><b>Household</b><span>Where current household members who regularly stay elsewhere are located.</span><small>Present</small></div>
+      <div class="dimension"><b>People</b><span>Where people contacted in the previous three months are located.</span><small>Present</small></div>
+      <div class="dimension"><b>Support</b><span>Where money, practical help, presence and obligation connect people across places.</span><small>Present</small></div>
+      <div class="dimension"><b>Future</b><span>Places attached to future residence, retirement and children’s or grandchildren’s lives.</span><small>Anticipated</small></div>
+    </div>
+    <div class="quote-line">Where I have been. Where I am.<br>Where I remain connected. <em>Where I may yet go.</em></div>
+  </div>
+</section>
+
+<section class="section quant">
+  <div class="container reveal">
+    <div class="kicker">Belonging without containment</div>
+    <h2>Distributed life did not mean detachment from where people lived.</h2>
+    <p class="lede">Across all three city samples, most respondents said they felt they belonged in their neighbourhood.</p>
+    <div class="stats">
+      <div class="stat"><strong>75%</strong><span>Accra · neighbourhood belonging</span></div>
+      <div class="stat"><strong>80%</strong><span>Johannesburg · neighbourhood belonging</span></div>
+      <div class="stat"><strong>88%</strong><span>Nairobi · neighbourhood belonging</span></div>
+    </div>
+    <div class="mega-stat">
+      <strong>58.4%</strong>
+      <div><p>Among respondents who said they belonged in their neighbourhood and answered at least one question about the future, 58.4% imagined at least one future <strong>elsewhere</strong> — in a community of origin, elsewhere in the home country, or in another country.</p></div>
+    </div>
+    <div class="quote-line"><em>Belonging here</em> did not require imagining the whole life here.</div>
+  </div>
+</section>
+
+<section class="field-photo">
+  <div class="image" role="img" aria-label="Street scene in Kayole, Nairobi, from the Urban Temporalities fieldwork archive"></div>
+  <div class="text"><div class="text-inner reveal">
+    <div class="kicker">The human geography</div>
+    <h2>The interviews made those combinations legible.</h2>
+    <p>In one Kayole focus group, some participants valued children growing up locally because the neighbourhood taught resilience, even while imagining that they might later move elsewhere. Others wanted their children to leave. The disagreement mattered: attachment and future orientation were not opposites.</p>
+    <div class="qual-source">Kayole focus group · Nairobi · paraphrased from translated transcript</div>
+    <div class="pull">Spatial life was distributed.<br><span style="color:var(--gold2)">Institutional life often was too.</span></div>
+  </div></div>
+</section>
+
+<section class="section routes">
+  <div class="container reveal">
+    <div class="kicker">More than one route through urban life</div>
+    <div class="two-col">
+      <div><h2>Plurality is not the same thing as absence.</h2></div>
+      <div>
+        <p>Residents also described neighbourhood life as something learned relationally. In Kayole, newcomers had to understand local routines, risks and who could help them navigate the area. Depending on the problem, help might involve relatives, neighbours, landlords, religious organisations, councillors, police, courts or other intermediaries.</p>
+        <p>Some routes worked. Others failed. Formal institutions could be essential while also being difficult, slow or risky to reach.</p>
+        <p>The implication is modest but important: a city may look disordered when viewed through an expectation of one territory, one authority and one route into political life. Following people closely can reveal pattern where our categories initially see fragmentation.</p>
+        <div class="aside"><b>What we are not claiming</b>Three cities cannot stand in for a continent. This project does not offer a universal replacement model for African or “Global South” urbanism, and it does not treat all informal or relational arrangements as benign.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="closing-line">
+  <div class="closing-content"><div class="closing-copy reveal">
+    <div class="kicker">At project close</div>
+    <p class="closing-context">People can be deeply rooted where they live while relationships, obligations, institutional routes and futures remain distributed across other places.</p>
+    <p class="closing-bridge">Perhaps the city was never large enough to contain everything we were trying to see.</p>
+    <div class="final" id="closing-line">
+      <span class="final-line">A boundary can tell us where</span>
+      <span class="final-line">a jurisdiction stops.</span>
+      <span class="final-gold">It cannot tell us where</span>
+      <span class="final-line final-gold" style="margin-top:0">a life stops.</span>
+    </div>
+  </div><div class="photo-credit">Photograph · Loren Landau</div><p class="sr-only">Closing field photograph from Nairobi showing a motorcyclist moving through an urban landscape crossed by overhead wires.</p></div>
+</section>
+</main>
+
+<footer class="methods">
+  <div class="container">
+    <details>
+      <summary>About the research · how to read the maps</summary>
+      <div class="methods-grid">
+        <div>
+          <p><strong>Study frame.</strong> This visual essay draws on survey, qualitative and spatial work across nine neighbourhoods in Accra, Johannesburg and Nairobi. Survey percentages use the cleaned analytic sample (n=1,623), with item-specific valid denominators. They describe the study samples rather than the populations of the three cities.</p>
+          <p><strong>Qualitative material.</strong> The qualitative corpus contains 110 transcripts. Interviews and focus groups are used here to illuminate configurations and mechanisms, not to estimate prevalence. The two qualitative moments in this essay are paraphrases from translated transcripts rather than direct participant quotations.</p>
+          <p><strong>City edges.</strong> Administrative jurisdiction, Africapolis 2020 built-up morphology and a 2015 modelled functional urban area are kept separate because they answer different questions. The functional layer is a harmonised model, not observed commuting. For Accra, the administrative boundary is not displayed because the available geometry could not be verified to the same standard as the other city-edge layers; rather than approximate it, we leave that layer unavailable.</p>
+        </div>
+        <div>
+          <p><strong>Life geography.</strong> The map shows aggregates rather than individual trajectories. A place appears only when at least five unique respondents are represented; otherwise locations are combined at country level or withheld. Curves show relational reach, not literal travel routes.</p>
+          <p><strong>Future orientation.</strong> For the 58.4% measure, we counted respondents who reported neighbourhood belonging, answered at least one future question, and located at least one future in their community of origin, elsewhere in the home country, or in another country. The mapped Future layer is a different object: it uses named destinations that passed spatial and disclosure checks. The statistic and the map therefore should not be read as the same measure.</p>
+          <p><strong>About this edition.</strong> This essay presents only spatial layers that meet the project's public-display and disclosure standards. Where a comparable boundary or destination could not be verified to the same standard, it is omitted rather than approximated.</p>
+        </div>
+      </div>
+    </details>
+    <div class="credit"><div>Author · Kabiri N. Bule · October 2026 · Urban Temporalities · Accra · Johannesburg · Nairobi</div><div>Photography · Loren Landau: opening street, Kayole street, Nairobi motorcycle · Additional imagery: Envato Elements · Interactive: Atlas of Urban Elsewheres</div></div>
+  </div>
+</footer>
+<script>
+const reveals=[...document.querySelectorAll('.reveal')];
+if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
+  reveals.forEach(el=>io.observe(el));
+}else{reveals.forEach(el=>el.classList.add('visible'));}
+</script>
+</body>
+</html>
