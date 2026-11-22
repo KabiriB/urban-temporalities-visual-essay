@@ -60,7 +60,7 @@ button{font:inherit}
 .step-copy{transition:opacity .45s ease,transform .45s ease}
 .step-copy.swap{opacity:0;transform:translateY(8px)}
 .story-steps{position:relative;z-index:3}
-.story-step{min-height:82svh;display:flex;flex-direction:column;justify-content:center;opacity:.30;transition:opacity .5s ease,transform .5s ease;transform:translateY(16px)}
+.story-step{min-height:72svh;display:flex;flex-direction:column;justify-content:center;opacity:.30;transition:opacity .5s ease,transform .5s ease;transform:translateY(16px)}
 .story-step.active{opacity:1;transform:none}
 .story-step .step-no{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
 .story-step h2{font-size:clamp(46px,5vw,78px);line-height:.92;margin:0;max-width:520px}
@@ -116,11 +116,11 @@ button{font:inherit}
  radial-gradient(circle at 62% 48%,rgba(26,49,43,.48),transparent 42%),#081311}
 .life-map:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(0,0,0,.42)}
 #lifeSvg{position:absolute;inset:0;width:100%;height:100%}
-.world-country{fill:#14231f;stroke:none;vector-effect:non-scaling-stroke;transition:fill .7s ease,opacity .7s ease}
-.world-country.africa{fill:#182b26}
+.world-country{fill:#13211e;stroke:rgba(187,203,196,.08);stroke-width:.45;vector-effect:non-scaling-stroke;opacity:.18;transition:fill .7s ease,opacity .7s ease}
+.world-country.africa{fill:#1a2e28;opacity:.28}
 .regional-border{fill:none;stroke:rgba(180,197,190,.15);stroke-width:.55;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .7s ease}
 .local-boundary{fill:none;stroke:rgba(238,211,153,.42);stroke-width:1;vector-effect:non-scaling-stroke;opacity:1;transition:opacity .7s ease}
-.life-arc{fill:none;stroke:rgba(224,162,60,.68);stroke-width:1.15;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .75s ease;filter:url(#softGlow)}
+.life-arc{fill:none;stroke:rgba(224,162,60,.58);stroke-width:1;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .75s ease;filter:url(#softGlow)}
 .life-node{fill:var(--amber);stroke:#101716;stroke-width:.7;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .75s ease}
 .life-node.country{fill:#0b1614;stroke:var(--amber);stroke-width:1.4}
 .origin-dot{fill:var(--cream);stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke;filter:url(#softGlow)}
@@ -157,7 +157,7 @@ button{font:inherit}
 
 /* BELONGING */
 .belonging{min-height:100svh;display:grid;grid-template-columns:1.04fr .96fr;background:var(--paper)}
-.belonging-photo{position:relative;min-height:680px;background:url("assets/kawangware-field.jpg") center/cover no-repeat}
+.belonging-photo{position:relative;min-height:680px;background:url("assets/accra-aerial.jpg") center/cover no-repeat}
 .belonging-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.28),transparent 55%)}
 .belonging-copy{padding:10vh 6vw;display:flex;flex-direction:column;justify-content:center}
 .belonging-copy .eyebrow{color:var(--gold)}
@@ -434,7 +434,7 @@ button{font:inherit}
         <div class="step-no">01 · One anchor</div>
         <h2>Residence gives us a starting point.</h2>
         <p class="lead">Johannesburg is one coordinate in the life, not the whole geography.</p>
-        <p class="note">The guided map uses released Future destinations as one example. Curves show relational reach, not reconstructed travel routes.</p>
+        <p class="note">Future destinations offer one example of how the same life can occupy several geographic fields.</p>
       </article>
       <article class="story-step life-step" data-life-stage="1">
         <div class="step-no">02 · Pull back</div>
@@ -461,7 +461,7 @@ button{font:inherit}
         <g id="destLabelLayer"></g>
       </svg>
       <div class="life-scale"><span>Geographic field</span><strong id="lifeScaleLabel">City</strong></div>
-      <div class="life-map-note">Johannesburg Future destinations · aggregated for privacy</div>
+      <div class="life-map-note">Released future destinations · Johannesburg sample</div>
     </div>
   </div>
 </section>
@@ -489,7 +489,7 @@ button{font:inherit}
   <div class="container reveal">
     <div class="eyebrow">Eight years of following the question</div>
     <h2>As the archive grew, the same patterns kept returning.</h2>
-    <p>Across Accra, Johannesburg and Nairobi, we read urban life through survey responses, interviews, focus groups and spatial data. The point was not to make every piece of evidence visible at once, but to see what kept recurring across them.</p>
+    <p>Across Accra, Johannesburg and Nairobi, survey responses, interviews, focus groups and spatial data kept returning us to the same underlying pattern.</p>
     <div class="evidence-line">
       <span><b>3</b> cities</span><span><b>9</b> neighbourhoods</span><span><b>110</b> qualitative transcripts</span><span><b>1,643</b> survey respondents</span>
     </div>
@@ -497,7 +497,7 @@ button{font:inherit}
 </section>
 
 <section class="belonging">
-  <div class="belonging-photo"><div class="photo-credit">Photograph · Loren Landau</div></div>
+  <div class="belonging-photo"><div class="photo-credit">Image · Envato Elements</div></div>
   <div class="belonging-copy reveal">
     <div class="eyebrow">Belonging without containment</div>
     <h2>Most people told us they belonged where they lived.</h2>
@@ -754,16 +754,22 @@ function classify(f){
   if(p.inside_admin_city || p.inside_morph_city_2020 || p.inside_fua_2015)return "local";
   return "regional";
 }
+const guidedRanks=new Set([1,2,3,4,5,6,8,9,12,13,14,15]);
 BOUNDARY.future.features.forEach(f=>{
+  const rank=f.properties.rank;
+  if(!guidedRanks.has(rank))return;
   const dest=[worldX(f.geometry.coordinates[0]),worldY(f.geometry.coordinates[1])];
-  const kind=classify(f),dx=dest[0]-origin[0],dy=dest[1]-origin[1],len=Math.max(.001,Math.hypot(dx,dy)),bend=kind==="local"?len*.18:kind==="regional"?Math.min(12,Math.max(.45,len*.13)):Math.min(34,Math.max(2.5,len*.16)),sign=(f.properties.rank%2?1:-1);
+  const kind=classify(f),dx=dest[0]-origin[0],dy=dest[1]-origin[1],len=Math.max(.001,Math.hypot(dx,dy));
+  const bend=kind==="local"?0:kind==="regional"?Math.min(9,Math.max(.35,len*.10)):Math.min(26,Math.max(2.2,len*.14));
+  const sign=(rank%2?1:-1);
   const mx=(origin[0]+dest[0])/2+(-dy/len)*bend*sign,my=(origin[1]+dest[1])/2+(dx/len)*bend*sign;
-  const arc=makeSvg("path",{d:`M${origin[0]},${origin[1]} Q${mx},${my} ${dest[0]},${dest[1]}`,class:`life-arc ${kind}`,"data-kind":kind},$("#arcLayer"));
-  const n=makeSvg("circle",{cx:dest[0],cy:dest[1],r:f.properties.weight===3?2.9:f.properties.weight===2?2.2:1.65,class:`life-node ${f.properties.aggregation==="country"?"country":""} ${kind}`,"data-kind":kind,"data-weight":f.properties.weight},$("#nodeLayer"));
+  const d=kind==="local"?`M${origin[0]},${origin[1]} L${dest[0]},${dest[1]}`:`M${origin[0]},${origin[1]} Q${mx},${my} ${dest[0]},${dest[1]}`;
+  makeSvg("path",{d,class:`life-arc ${kind}`,"data-kind":kind,"data-rank":rank},$("#arcLayer"));
+  const n=makeSvg("circle",{cx:dest[0],cy:dest[1],r:f.properties.weight===3?2.9:f.properties.weight===2?2.2:1.65,class:`life-node ${f.properties.aggregation==="country"?"country":""} ${kind}`,"data-kind":kind,"data-weight":f.properties.weight,"data-rank":rank},$("#nodeLayer"));
   const title=makeSvg("title",{},n);title.textContent=`${f.properties.label} · ${f.properties.countBand} respondents`;
-  if([1,2,9].includes(f.properties.rank)){
-    const label=f.properties.rank===1?"Zimbabwe":f.properties.rank===2?"Mozambique":"United States";
-    const t=makeSvg("text",{x:dest[0]+5,y:dest[1]-4,class:"dest-label","data-label-kind":kind,"data-rank":f.properties.rank},$("#destLabelLayer"));t.textContent=label;
+  if([1,2,9].includes(rank)){
+    const label=rank===1?"Zimbabwe":rank===2?"Mozambique":"United States";
+    const t=makeSvg("text",{x:dest[0]+5,y:dest[1]-4,class:"dest-label","data-label-kind":kind,"data-rank":rank},$("#destLabelLayer"));t.textContent=label;
   }
 });
 function boxFromLonLat(lon0,latTop,lon1,latBottom){
@@ -790,10 +796,15 @@ function animateViewBox(target,duration=900){
 function setLifeStage(stage){
   const kind=stage===0?"local":stage===1?"regional":"global";
   $$(".life-step").forEach(el=>el.classList.toggle("active",+el.dataset.lifeStage===stage));
-  $$(".life-arc,.life-node").forEach(el=>{const k=el.dataset.kind;const on=stage===0?k==="local":stage===1?k!=="global":true;el.style.opacity=on?"1":"0"});
-  $$(".dest-label").forEach(el=>{const rank=+el.dataset.rank;const on=(stage===1&&(rank===1||rank===2))||(stage===2&&rank===9);el.style.opacity=on?"1":"0"});
-  $$(".local-boundary").forEach(el=>el.style.opacity=stage===0?"1":stage===1?".14":"0");
-  $$(".regional-border").forEach(el=>el.style.opacity=stage===1?".45":stage===2?".12":"0");
+  $$(".life-arc,.life-node").forEach(el=>{
+    const k=el.dataset.kind;
+    const on=stage===0?k==="local":stage===1?k==="regional":k==="regional"||k==="global";
+    el.style.opacity=on?(k==="local"?".58":".9"):"0";
+  });
+  $$(".dest-label").forEach(el=>{const rank=+el.dataset.rank;const on=(stage===1&&(rank===1||rank===2))||(stage===2&&(rank===1||rank===2||rank===9));el.style.opacity=on?"1":"0"});
+  $$(".local-boundary").forEach(el=>el.style.opacity=stage===0?".72":"0");
+  $$(".regional-border").forEach(el=>el.style.opacity=stage===1?".34":stage===2?".10":"0");
+  $$(".world-country").forEach(el=>el.style.opacity=stage===0?"0":stage===1?(el.classList.contains("africa")?".34":".05"):".16");
   $("#lifeScaleLabel").textContent=stage===0?"City":stage===1?"Region":"World";
   animateViewBox(stage===0?boxes.local:stage===1?boxes.regional:boxes.global);
 }
@@ -827,7 +838,7 @@ function observeSteps(selector,callback){
   const steps=$$(selector);
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting)callback(e.target)});
-  },{rootMargin:"-34% 0px -46% 0px",threshold:0});
+  },{rootMargin:"-42% 0px -42% 0px",threshold:0});
   steps.forEach(el=>obs.observe(el));
 }
 observeSteps(".boundary-step",el=>setBoundaryKind(el.dataset.boundary));
