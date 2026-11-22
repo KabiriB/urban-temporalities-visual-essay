@@ -56,34 +56,45 @@ button{font:inherit}
 .opening-question h2{font-size:clamp(64px,9vw,142px);line-height:.86;margin:0}
 .opening-question p{font:400 clamp(20px,2vw,30px)/1.45 var(--serif);color:#59615d;max-width:700px;margin:32px auto 0}
 
-/* SHARED SCROLLY */
-.scrolly{position:relative}
-.sticky{position:sticky;top:0;height:100svh;min-height:650px;overflow:hidden}
-.step-copy{transition:opacity .35s ease,transform .35s ease}
-.step-copy.swap{opacity:0;transform:translateY(10px)}
-.progress-dots{display:flex;gap:7px;margin-top:22px}
-.progress-dots i{display:block;width:26px;height:2px;background:#c9c1b4;transition:.35s}
-.progress-dots i.on{width:58px;background:var(--ink)}
+/* EDITORIAL SCROLL STEPS */
+.step-copy{transition:opacity .45s ease,transform .45s ease}
+.step-copy.swap{opacity:0;transform:translateY(8px)}
+.story-steps{position:relative;z-index:3}
+.story-step{min-height:82svh;display:flex;flex-direction:column;justify-content:center;opacity:.30;transition:opacity .5s ease,transform .5s ease;transform:translateY(16px)}
+.story-step.active{opacity:1;transform:none}
+.story-step .step-no{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.story-step h2{font-size:clamp(46px,5vw,78px);line-height:.92;margin:0;max-width:520px}
+.story-step .lead{font:400 clamp(20px,2vw,29px)/1.25 var(--serif);margin:22px 0 0;max-width:470px;color:#303735}
+.story-step .note{font:400 13px/1.58 var(--sans);color:var(--muted);margin-top:26px;max-width:470px}
 
 /* BOUNDARY */
-.boundary{height:300vh;background:var(--paper)}
-.boundary .sticky{display:grid;grid-template-columns:minmax(330px,34%) 1fr;background:var(--paper)}
-.boundary-copy{padding:9vh 4vw 7vh 5vw;background:linear-gradient(90deg,var(--paper),#efe9de);border-right:1px solid rgba(17,23,22,.08);display:flex;flex-direction:column;justify-content:center;position:relative;z-index:3}
-.boundary-copy .eyebrow{color:var(--gold);margin-bottom:26px}
-.boundary-copy h2{font-size:clamp(46px,5.1vw,78px);line-height:.92;margin:0;max-width:520px}
-.boundary-copy p{font:400 clamp(20px,2vw,29px)/1.25 var(--serif);margin:22px 0 0;max-width:470px;color:#303735}
-.boundary-copy .small{font:400 13px/1.55 var(--sans);color:var(--muted);margin-top:28px;max-width:470px}
-.boundary-map{position:relative;background:#eee8dd;overflow:hidden}
-.boundary-map:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(17,23,22,.027) 1px,transparent 1px),linear-gradient(90deg,rgba(17,23,22,.027) 1px,transparent 1px);background-size:54px 54px}
+.boundary{background:var(--paper);position:relative}
+.boundary-layout{display:grid;grid-template-columns:minmax(330px,39%) 1fr;align-items:start}
+.boundary-steps{padding:8vh 4vw 10vh 5vw;background:linear-gradient(90deg,var(--paper),#efe9de);border-right:1px solid rgba(17,23,22,.07)}
+.boundary-visual{position:sticky;top:0;height:100svh;min-height:650px;background:#eee8dd;overflow:hidden}
+.boundary-visual:before{content:"";position:absolute;inset:0;background:
+ radial-gradient(circle at 60% 46%,rgba(255,255,255,.55),transparent 47%),
+ linear-gradient(rgba(17,23,22,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(17,23,22,.018) 1px,transparent 1px);background-size:auto,72px 72px,72px 72px}
 #boundarySvg{position:absolute;inset:5% 4% 4%;width:92%;height:91%}
-.boundary-path{vector-effect:non-scaling-stroke;transition:opacity .35s ease,fill-opacity .35s ease,stroke-width .35s ease}
-.b-admin{stroke:var(--gold);fill:rgba(178,122,25,.035);stroke-width:2.4}
-.b-morph{stroke:var(--teal);fill:rgba(44,141,132,.085);stroke-width:2}
-.b-fua{stroke:var(--blue);fill:rgba(115,152,195,.025);stroke-width:2;stroke-dasharray:7 7}
+.boundary-fill,.boundary-outline{vector-effect:non-scaling-stroke;transition:opacity .75s cubic-bezier(.2,.7,.2,1),fill-opacity .75s cubic-bezier(.2,.7,.2,1),stroke-opacity .75s cubic-bezier(.2,.7,.2,1)}
+.boundary-fill{stroke:none;opacity:0}
+.boundary-outline{fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
+.b-admin-fill{fill:rgba(178,122,25,.055)}
+.b-admin-outline{stroke:var(--gold);stroke-width:2.25}
+.b-morph-fill{fill:rgba(44,141,132,.17);filter:url(#morphSoft)}
+.b-morph-outline{stroke:rgba(44,141,132,.34);stroke-width:.9}.b-morph-outline.visible{opacity:.08}
+.b-fua-fill{fill:rgba(115,152,195,.07)}
+.b-fua-outline{stroke:var(--blue);stroke-width:2.15;stroke-dasharray:8 8}
+.boundary-fill.visible,.boundary-outline.visible{opacity:1}
+.boundary-outline.context{opacity:.16}
+.boundary-fill.context{opacity:.08}
 .site{fill:#101716;stroke:var(--paper);stroke-width:2}
 .site-label{font:600 10px var(--sans);fill:#17201e}
-.map-caption{position:absolute;right:26px;bottom:22px;text-align:right;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#777e79}
-.map-caption strong{display:block;font:400 28px/1 var(--serif);letter-spacing:-.02em;text-transform:none;color:#1a211f;margin-bottom:6px}
+.boundary-caption{position:absolute;left:28px;bottom:24px;right:28px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;z-index:3}
+.boundary-caption .definition{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#6d756f}
+.boundary-caption .definition strong{display:block;font:400 30px/1 var(--serif);letter-spacing:-.025em;text-transform:none;color:#171e1c;margin-bottom:7px}
+.boundary-caption .city{text-align:right;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#777e79}
+.boundary-caption .city strong{display:block;font:400 28px/1 var(--serif);letter-spacing:-.02em;text-transform:none;color:#1a211f;margin-bottom:6px}
 
 /* boundary pause */
 .pause{min-height:88svh;display:grid;place-items:center;padding:80px 24px;text-align:center;background:var(--paper)}
@@ -91,27 +102,33 @@ button{font:inherit}
 .pause em{display:block;color:var(--gold);font-style:normal;margin-top:8px}
 
 /* LIFE */
-.life{height:380vh;background:var(--night);color:var(--cream)}
-.life .sticky{display:grid;grid-template-columns:minmax(330px,35%) 1fr;background:var(--night)}
-.life-copy{position:relative;z-index:4;padding:9vh 4vw 7vh 5vw;background:linear-gradient(90deg,#06100f,#091513);border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:center}
-.life-copy .eyebrow{color:#e2b35a;margin-bottom:25px}
-.life-copy h2{font-size:clamp(46px,5.2vw,82px);line-height:.91;margin:0}
-.life-copy p{font:400 clamp(19px,1.7vw,26px)/1.4 var(--serif);color:#ced7d2;max-width:500px;margin:24px 0 0}
-.life-copy .micro{font:400 12px/1.55 var(--sans);color:#93a19b;margin-top:25px;max-width:470px}
-.atlas-link{display:inline-flex;align-items:center;gap:10px;width:max-content;margin-top:27px;padding:11px 15px;border:1px solid rgba(224,162,60,.5);border-radius:999px;text-decoration:none;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f2ddb0;opacity:0;pointer-events:none;transform:translateY(8px);transition:.5s}
-.atlas-link.show{opacity:1;pointer-events:auto;transform:none}
-.life-map{position:relative;overflow:hidden;background:#0a1513}
-.life-map:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 100px rgba(0,0,0,.34)}
+.life{background:var(--night);color:var(--cream);position:relative}
+.life-layout{display:grid;grid-template-columns:minmax(330px,39%) 1fr;align-items:start}
+.life-steps{padding:8vh 4vw 10vh 5vw;background:linear-gradient(90deg,#06100f,#091513);border-right:1px solid rgba(255,255,255,.055)}
+.life .story-step{color:var(--cream);opacity:.24}
+.life .story-step.active{opacity:1}
+.life .story-step .step-no{color:#e2b35a}
+.life .story-step h2{color:var(--cream)}
+.life .story-step .lead{color:#ced7d2}
+.life .story-step .note{color:#8fa099}
+.atlas-link{display:inline-flex;align-items:center;gap:10px;width:max-content;margin-top:26px;padding:11px 15px;border:1px solid rgba(224,162,60,.5);border-radius:999px;text-decoration:none;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f2ddb0}
+.life-map{position:sticky;top:0;height:100svh;min-height:650px;overflow:hidden;background:
+ radial-gradient(circle at 62% 48%,rgba(26,49,43,.48),transparent 42%),#081311}
+.life-map:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(0,0,0,.42)}
 #lifeSvg{position:absolute;inset:0;width:100%;height:100%}
-.world-country{fill:#12201e;stroke:#42514d;stroke-width:.5;vector-effect:non-scaling-stroke}
-.world-country.africa{fill:#142421;stroke:#53615d}
-.local-boundary{fill:none;stroke:rgba(238,211,153,.55);stroke-width:1.1;vector-effect:non-scaling-stroke;opacity:1;transition:opacity .6s}
-.life-arc{fill:none;stroke:rgba(224,162,60,.65);stroke-width:1.25;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .7s}
-.life-node{fill:var(--amber);stroke:#101716;stroke-width:.7;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .7s}
-.life-node.country{fill:#0b1614;stroke:var(--amber);stroke-width:1.5}
-.origin-dot{fill:var(--cream);stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke}
+.world-country{fill:#14231f;stroke:none;vector-effect:non-scaling-stroke;transition:fill .7s ease,opacity .7s ease}
+.world-country.africa{fill:#182b26}
+.regional-border{fill:none;stroke:rgba(180,197,190,.15);stroke-width:.55;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .7s ease}
+.local-boundary{fill:none;stroke:rgba(238,211,153,.42);stroke-width:1;vector-effect:non-scaling-stroke;opacity:1;transition:opacity .7s ease}
+.life-arc{fill:none;stroke:rgba(224,162,60,.68);stroke-width:1.15;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .75s ease;filter:url(#softGlow)}
+.life-node{fill:var(--amber);stroke:#101716;stroke-width:.7;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .75s ease}
+.life-node.country{fill:#0b1614;stroke:var(--amber);stroke-width:1.4}
+.origin-dot{fill:var(--cream);stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke;filter:url(#softGlow)}
 .map-label{font-family:var(--sans);font-weight:600;fill:#f4ede2;paint-order:stroke;stroke:#081210;stroke-width:3px;stroke-linejoin:round}
-.life-map-note{position:absolute;left:22px;bottom:20px;z-index:4;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8fa09a}
+.dest-label{font-family:var(--sans);font-weight:500;fill:#c9d3ce;paint-order:stroke;stroke:#081210;stroke-width:3px;stroke-linejoin:round;opacity:0;transition:opacity .6s ease}
+.life-map-note{position:absolute;left:24px;bottom:20px;z-index:4;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#8fa09a}
+.life-scale{position:absolute;right:26px;top:24px;z-index:4;text-align:right;color:#8fa09a;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+.life-scale strong{display:block;font:400 27px/1 var(--serif);letter-spacing:-.02em;text-transform:none;color:#e9e2d6;margin-top:5px}
 
 /* LIFE STATEMENT */
 .life-statement{min-height:86svh;background:var(--night);color:var(--cream);display:grid;place-items:center;text-align:center;padding:70px 24px}
@@ -140,7 +157,7 @@ button{font:inherit}
 
 /* BELONGING */
 .belonging{min-height:100svh;display:grid;grid-template-columns:1.04fr .96fr;background:var(--paper)}
-.belonging-photo{position:relative;min-height:680px;background:url("assets/nairobi-kayole-street.jpg") center/cover no-repeat}
+.belonging-photo{position:relative;min-height:680px;background:url("assets/kawangware-field.jpg") center/cover no-repeat}
 .belonging-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.28),transparent 55%)}
 .belonging-copy{padding:10vh 6vw;display:flex;flex-direction:column;justify-content:center}
 .belonging-copy .eyebrow{color:var(--gold)}
@@ -152,23 +169,22 @@ button{font:inherit}
 .belonging-line{font:400 clamp(31px,3vw,46px)/1.13 var(--serif);margin-top:38px;color:#171f1d}
 
 /* FUTURE */
-.future{height:300vh;background:var(--night);color:var(--cream)}
-.future .sticky{display:grid;grid-template-columns:minmax(330px,40%) 1fr;background:var(--night)}
-.future-copy{padding:9vh 4vw 7vh 5vw;display:flex;flex-direction:column;justify-content:center;background:#07100f;border-right:1px solid rgba(255,255,255,.06)}
-.future-copy .eyebrow{color:#dfb056}
-.future-copy h2{font-size:clamp(46px,5.3vw,83px);line-height:.92;margin:22px 0}
-.future-copy p{font:400 clamp(19px,1.7vw,25px)/1.45 var(--serif);color:#c9d2cd;max-width:520px}
-.future-viz{padding:10vh 6vw;display:flex;flex-direction:column;justify-content:center;position:relative}
-.future-horizon{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#d4b36c}
-.future-number{font:400 clamp(74px,9vw,142px)/.85 var(--serif);letter-spacing:-.06em;margin:18px 0 20px}
-.future-number small{font:400 16px/1.3 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#8fa09a;margin-left:10px}
-.share-track{height:22px;background:#16231f;position:relative;overflow:hidden;border-radius:999px;max-width:760px}
-.share-fill{height:100%;width:10.2%;background:linear-gradient(90deg,#b77d1c,#e0a23c);border-radius:999px;transition:width .8s cubic-bezier(.2,.7,.2,1)}
-.share-labels{display:flex;justify-content:space-between;max-width:760px;margin-top:10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#7e8e87}
-.future-note{font:400 clamp(27px,2.6vw,42px)/1.18 var(--serif);margin-top:42px;max-width:790px;color:#f4ecdf}
-.future-note em{font-style:normal;color:var(--amber)}
-.future-dots{display:flex;gap:8px;margin-top:30px}
-.future-dots i{width:30px;height:2px;background:#34413d;transition:.35s}.future-dots i.on{width:66px;background:var(--amber)}
+.future{padding:13vh 0;background:var(--night);color:var(--cream)}
+.future .eyebrow{color:#dfb056}
+.future-head{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:end;margin-bottom:72px}
+.future-head h2{font-size:clamp(52px,6vw,94px);line-height:.9;margin:18px 0 0;max-width:720px}
+.future-head p{font:400 clamp(20px,1.75vw,27px)/1.48 var(--serif);color:#c9d2cd;max-width:650px;margin:0}
+.future-sequence{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;border-top:1px solid #304039;padding-top:28px}
+.future-card{padding:28px 24px 30px;border:1px solid #2a3833;background:#0a1513;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.future-card:before{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:#1a2723}
+.future-card:after{content:"";position:absolute;left:0;bottom:0;height:4px;width:var(--share,10%);background:linear-gradient(90deg,#ad7418,#e0a23c);transform:scaleX(0);transform-origin:left;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.future-card.on:after{transform:scaleX(1)}
+.future-card .horizon{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#d4b36c}
+.future-card .pct{font:400 clamp(70px,8vw,118px)/.86 var(--serif);letter-spacing:-.065em;margin:30px 0 12px;color:#f7efe2}
+.future-card .pct small{font:500 10px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#8fa09a;display:block;margin-top:13px}
+.future-card p{font:400 19px/1.4 var(--serif);color:#bbc6c0;margin:0;max-width:330px}
+.future-conclusion{font:400 clamp(34px,4vw,62px)/1.08 var(--serif);margin:72px 0 0;max-width:960px;color:#f3eadc}
+.future-conclusion em{font-style:normal;color:var(--amber)}
 
 /* PHOTO QUOTE */
 .photo-quote{min-height:100svh;position:relative;display:flex;align-items:flex-end;color:var(--cream);overflow:hidden}
@@ -261,19 +277,25 @@ button{font:inherit}
   .hero-inner{width:calc(100% - 34px);padding-bottom:48px}
   .hero h1{font-size:clamp(58px,15vw,86px);line-height:.86}
   .opening-question{min-height:72svh}
-  .boundary,.life,.future{height:330vh}
-  .boundary .sticky,.life .sticky,.future .sticky{grid-template-columns:1fr;grid-template-rows:44% 56%}
-  .boundary-copy,.life-copy,.future-copy{grid-row:2;padding:28px 22px 34px;border-right:0;border-top:1px solid rgba(0,0,0,.08);justify-content:flex-start}
-  .life-copy,.future-copy{border-top-color:rgba(255,255,255,.07)}
-  .boundary-map,.life-map,.future-viz{grid-row:1;grid-column:1}
-  .boundary-copy h2,.life-copy h2,.future-copy h2{font-size:clamp(39px,10vw,58px)}
-  .boundary-copy p,.life-copy p,.future-copy p{font-size:19px;margin-top:14px}
-  .boundary-copy .small,.life-copy .micro{display:none}
-  .progress-dots,.future-dots{margin-top:13px}
+  .boundary-layout,.life-layout{display:flex;flex-direction:column;align-items:stretch}
+  .boundary-visual,.life-map{order:0}
+  .boundary-steps,.life-steps{order:1}
+  .boundary-visual,.life-map{position:sticky;top:0;height:48svh;min-height:340px;grid-row:1;z-index:100;isolation:isolate}
+  .boundary-steps,.life-steps{grid-row:2;padding:0 22px 42px;border-right:0;position:relative;z-index:0}
+  .boundary-steps .story-step,.life-steps .story-step{transform:none}
+  .story-step{min-height:62svh;padding:54px 0}
+  .story-step h2{font-size:clamp(39px,10vw,58px)}
+  .story-step .lead{font-size:19px;margin-top:14px}
+  .story-step .note{font-size:12px}
   #boundarySvg{inset:2%;width:96%;height:96%}
-  .map-caption{right:14px;bottom:10px}
-  .life-copy{z-index:5}
-  .atlas-link{margin-top:16px}
+  .boundary-caption{left:14px;right:14px;bottom:11px}
+  .boundary-caption .definition strong,.boundary-caption .city strong{font-size:22px}
+  .life-map{grid-row:1}
+  .life-steps{grid-row:2;background:#07100f}
+  .atlas-link{margin-top:18px}
+  .future-head{grid-template-columns:1fr;gap:26px;margin-bottom:48px}
+  .future-sequence{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .future-card{padding:22px 16px;min-height:300px}
   .archive{grid-template-columns:1fr}
   .archive-side{padding:38px 22px;border-right:0;border-bottom:1px solid rgba(0,0,0,.08);min-height:180px}
   .archive-transcript{display:none}
@@ -302,11 +324,17 @@ button{font:inherit}
   .hero-image{background-position:57% 43%}
   .hero h1{font-size:clamp(50px,16vw,72px)}
   .opening-question h2{font-size:clamp(50px,15vw,78px)}
-  .boundary .sticky,.life .sticky,.future .sticky{grid-template-rows:42% 58%}
-  .boundary-copy,.life-copy,.future-copy{padding:23px 16px calc(28px + env(safe-area-inset-bottom))}
-  .boundary-copy h2,.life-copy h2,.future-copy h2{font-size:clamp(36px,10.5vw,50px)}
-  .boundary-copy p,.life-copy p,.future-copy p{font-size:17px}
-  .boundary-copy .eyebrow,.life-copy .eyebrow,.future-copy .eyebrow{margin-bottom:12px}
+  .boundary-visual,.life-map{height:44svh;min-height:300px}
+  .boundary-steps,.life-steps{padding-left:16px;padding-right:16px}
+  .story-step{min-height:58svh;padding:42px 0}
+  .story-step h2{font-size:clamp(36px,10.5vw,50px)}
+  .story-step .lead{font-size:17px}
+  .boundary-caption .definition{display:none}
+  .life-scale{right:14px;top:14px}
+  .life-map-note{left:14px;bottom:10px;font-size:8px}
+  .future{padding:90px 0}
+  .future-sequence{grid-template-columns:1fr;gap:12px}
+  .future-card{min-height:250px}
   .pause p{font-size:clamp(48px,14vw,74px)}
   .life-statement p{font-size:clamp(50px,14vw,78px)}
   .archive-main blockquote{font-size:clamp(52px,14vw,82px)}
@@ -315,8 +343,6 @@ button{font:inherit}
   .evidence-line b{font-size:30px}
   .belonging-copy h2{font-size:48px}
   .big-evidence strong{font-size:76px}
-  .future-number{font-size:92px}
-  .future-number small{display:block;margin:12px 0 0}
   .photo-quote blockquote{font-size:clamp(50px,14vw,80px)}
   .route-buttons{grid-template-columns:1fr}
   .route-chart{min-height:400px}
@@ -361,23 +387,38 @@ button{font:inherit}
   </div>
 </section>
 
-<section class="scrolly boundary" id="boundary">
-  <div class="sticky" id="boundarySticky">
-    <div class="boundary-copy">
-      <div class="eyebrow">The line</div>
-      <div class="step-copy" id="boundaryCopy">
-        <h2 id="boundaryTitle">Start with the legal city.</h2>
-        <p id="boundarySub">Municipal jurisdiction draws one edge.</p>
-        <div class="small" id="boundaryNote">It answers a precise question: where does local-government jurisdiction stop?</div>
-      </div>
-      <div class="progress-dots"><i class="on"></i><i></i><i></i></div>
+<section class="boundary" id="boundary">
+  <div class="boundary-layout">
+    <div class="boundary-steps story-steps">
+      <article class="story-step boundary-step active" data-boundary="admin">
+        <div class="step-no">01 · Jurisdiction</div>
+        <h2>Start with the legal city.</h2>
+        <p class="lead">Municipal jurisdiction draws one edge.</p>
+        <p class="note">It answers a precise question: where does local-government jurisdiction stop?</p>
+      </article>
+      <article class="story-step boundary-step" data-boundary="morph">
+        <div class="step-no">02 · Settlement</div>
+        <h2>Then follow the built city.</h2>
+        <p class="lead">The physical city keeps going.</p>
+        <p class="note">Buildings, roads and continuous urban fabric do not stop at the municipal line.</p>
+      </article>
+      <article class="story-step boundary-step" data-boundary="fua">
+        <div class="step-no">03 · Function</div>
+        <h2>Now follow the urban system.</h2>
+        <p class="lead">The edge moves again.</p>
+        <p class="note">A harmonised functional boundary answers a different question about the wider urban system.</p>
+      </article>
     </div>
-    <div class="boundary-map">
+    <div class="boundary-visual" aria-live="polite">
       <svg id="boundarySvg" viewBox="0 0 1000 1000" role="img" aria-label="Johannesburg shown using changing definitions of the city">
+        <defs><filter id="morphSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>
         <g id="boundaryLayers"></g>
         <g id="siteLayers"></g>
       </svg>
-      <div class="map-caption"><strong>Johannesburg</strong>Berea · Diepsloot · Katlehong</div>
+      <div class="boundary-caption">
+        <div class="definition"><strong id="boundaryDefinition">Administrative city</strong><span id="boundaryDefinitionNote">Legal jurisdiction</span></div>
+        <div class="city"><strong>Johannesburg</strong>Berea · Diepsloot · Katlehong</div>
+      </div>
     </div>
   </div>
 </section>
@@ -386,26 +427,41 @@ button{font:inherit}
   <p class="reveal">Nothing about the place changed.<em>The boundary did.</em></p>
 </section>
 
-<section class="scrolly life" id="life">
-  <div class="sticky">
-    <div class="life-copy">
-      <div class="eyebrow">Change the question</div>
-      <div class="step-copy" id="lifeCopy">
-        <h2 id="lifeTitle">Now start close to the city.</h2>
-        <p id="lifeText">The survey did not stop at residence. It followed where movement, household, people, support and future reached.</p>
-        <div class="micro" id="lifeMicro">The map uses released Future destinations here as one example. Curves show relational reach, not reconstructed travel routes.</div>
-      </div>
-      <a class="atlas-link" id="atlasLink" href="atlas.html" target="_blank" rel="noopener">Explore the full Atlas ↗</a>
-      <div class="progress-dots life-dots"><i class="on"></i><i></i><i></i></div>
+<section class="life" id="life">
+  <div class="life-layout">
+    <div class="life-steps story-steps">
+      <article class="story-step life-step active" data-life-stage="0">
+        <div class="step-no">01 · One anchor</div>
+        <h2>Residence gives us a starting point.</h2>
+        <p class="lead">Johannesburg is one coordinate in the life, not the whole geography.</p>
+        <p class="note">The guided map uses released Future destinations as one example. Curves show relational reach, not reconstructed travel routes.</p>
+      </article>
+      <article class="story-step life-step" data-life-stage="1">
+        <div class="step-no">02 · Pull back</div>
+        <h2>Then the field opens.</h2>
+        <p class="lead">The same future geography reaches across southern and eastern Africa.</p>
+        <p class="note">Durban, Lesotho, Zimbabwe, Mozambique, Malawi, the DRC and Ethiopia all appear among released destinations.</p>
+      </article>
+      <article class="story-step life-step" data-life-stage="2">
+        <div class="step-no">03 · Pull back again</div>
+        <h2>Change the question, and the map changes with it.</h2>
+        <p class="lead">Some connections extend far beyond the region.</p>
+        <p class="note">The point is not distance for its own sake. It is that different dimensions of the same life produce different geographies.</p>
+        <a class="atlas-link" href="atlas.html" target="_blank" rel="noopener">Explore the full Atlas ↗</a>
+      </article>
     </div>
     <div class="life-map">
-      <svg id="lifeSvg" viewBox="680 360 28 28" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Johannesburg and released future destinations shown at widening geographic scales">
+      <svg id="lifeSvg" viewBox="650 345 70 70" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Johannesburg and released future destinations shown at widening geographic scales">
+        <defs><filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
         <g id="worldLayer"></g>
+        <g id="regionalBorders"></g>
         <g id="localLayer"></g>
         <g id="arcLayer"></g>
         <g id="nodeLayer"></g>
+        <g id="destLabelLayer"></g>
       </svg>
-      <div class="life-map-note">Released Johannesburg Future destinations · n≥5 disclosure rule</div>
+      <div class="life-scale"><span>Geographic field</span><strong id="lifeScaleLabel">City</strong></div>
+      <div class="life-map-note">Johannesburg Future destinations · aggregated for privacy</div>
     </div>
   </div>
 </section>
@@ -420,7 +476,6 @@ button{font:inherit}
       <div class="eyebrow">From the archive</div>
       <div class="archive-meta" style="margin-top:18px">Diepsloot · Johannesburg<br>Focus group · long-term residents</div>
     </div>
-    <div class="archive-meta">Verbatim quotation<br>Laughter retained where recorded</div>
   </aside>
   <div class="archive-main">
     <blockquote class="reveal">“Huuu…<br>this is <em>Joburg?</em>”</blockquote>
@@ -433,10 +488,10 @@ button{font:inherit}
 <section class="evidence">
   <div class="container reveal">
     <div class="eyebrow">Eight years of following the question</div>
-    <h2>The archive became large. The story did not need to become complicated.</h2>
+    <h2>As the archive grew, the same patterns kept returning.</h2>
     <p>Across Accra, Johannesburg and Nairobi, we read urban life through survey responses, interviews, focus groups and spatial data. The point was not to make every piece of evidence visible at once, but to see what kept recurring across them.</p>
     <div class="evidence-line">
-      <span><b>3</b> cities</span><span><b>9</b> neighbourhoods</span><span><b>110</b> qualitative transcripts</span><span><b>1,643</b> geography-valid survey records</span>
+      <span><b>3</b> cities</span><span><b>9</b> neighbourhoods</span><span><b>110</b> qualitative transcripts</span><span><b>1,643</b> survey respondents</span>
     </div>
   </div>
 </section>
@@ -455,23 +510,30 @@ button{font:inherit}
   </div>
 </section>
 
-<section class="scrolly future" id="future">
-  <div class="sticky">
-    <div class="future-copy">
-      <div class="eyebrow">The future moves</div>
-      <div class="step-copy" id="futureCopy">
-        <h2 id="futureTitle">Two years from now.</h2>
-        <p id="futureText">At the shortest horizon, most classifiable futures remained in the current city.</p>
+<section class="future" id="future">
+  <div class="container">
+    <div class="future-head reveal">
+      <div>
+        <div class="eyebrow">The future moves</div>
+        <h2>The answer changed with the horizon.</h2>
       </div>
-      <div class="future-dots"><i class="on"></i><i></i><i></i></div>
+      <p>Ask where someone expects to be in two years, then ten years, then in retirement. The farther forward the question reaches, the more often the future lies beyond the current city.</p>
     </div>
-    <div class="future-viz">
-      <div class="future-horizon" id="futureHorizon">2 years</div>
-      <div class="future-number"><span id="futurePct">10%</span><small>beyond the current city</small></div>
-      <div class="share-track"><div class="share-fill" id="shareFill"></div></div>
-      <div class="share-labels"><span>Current city</span><span>Elsewhere</span></div>
-      <div class="future-note" id="futureNote">The geography of the future was still mostly <em>here.</em></div>
+    <div class="future-sequence">
+      <article class="future-card reveal" style="--share:10.2%">
+        <div><div class="horizon">2 years</div><div class="pct">10%<small>beyond the current city</small></div></div>
+        <p>At the shortest horizon, most classifiable futures remained in the current city.</p>
+      </article>
+      <article class="future-card reveal" style="--share:36.7%">
+        <div><div class="horizon">10 years</div><div class="pct">37%<small>beyond the current city</small></div></div>
+        <p>With a longer horizon, elsewhere became much more common.</p>
+      </article>
+      <article class="future-card reveal" style="--share:58.6%">
+        <div><div class="horizon">Retirement</div><div class="pct">59%<small>beyond the current city</small></div></div>
+        <p>By retirement, a majority of classifiable futures lay beyond the current city.</p>
+      </article>
     </div>
+    <div class="future-conclusion reveal">Time changed the answer to <em>where.</em></div>
   </div>
 </section>
 
@@ -620,53 +682,68 @@ function pathFor(geom,proj){
 function makeSvg(tag,attrs={},parent){
   const el=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));if(parent)parent.appendChild(el);return el;
 }
+function sqSegDist(p,a,b){
+  let x=a[0],y=a[1],dx=b[0]-x,dy=b[1]-y;
+  if(dx||dy){const t=((p[0]-x)*dx+(p[1]-y)*dy)/(dx*dx+dy*dy);if(t>1){x=b[0];y=b[1]}else if(t>0){x+=dx*t;y+=dy*t}}
+  dx=p[0]-x;dy=p[1]-y;return dx*dx+dy*dy;
+}
+function simplifyDP(points,tol=2.5){
+  if(points.length<=3)return points;const sq=tol*tol,keep=new Uint8Array(points.length);keep[0]=keep[points.length-1]=1;
+  const stack=[[0,points.length-1]];while(stack.length){const [a,b]=stack.pop();let max=sq,idx=-1;for(let i=a+1;i<b;i++){const d=sqSegDist(points[i],points[a],points[b]);if(d>max){idx=i;max=d}}if(idx>0){keep[idx]=1;stack.push([a,idx],[idx,b])}}
+  return points.filter((_,i)=>keep[i]);
+}
+function outerRings(geom){
+  if(geom.type==="Polygon")return [geom.coordinates[0]];
+  if(geom.type==="MultiPolygon")return geom.coordinates.map(p=>p[0]);
+  return [];
+}
+function outerPath(geom,proj,tol=2.6){
+  return outerRings(geom).map(r=>{const pts=simplifyDP(r.map(proj),tol);return pts.map((p,i)=>`${i?"L":"M"}${p[0].toFixed(2)},${p[1].toFixed(2)}`).join(" ")+" Z"}).join(" ");
+}
 
 /* boundary */
 const boundaryAll=[...BOUNDARY.admin.features,...BOUNDARY.morph.features,...BOUNDARY.fua.features];
 const bproj=localProjector(boundaryAll);
 const bLayer=$("#boundaryLayers");
-[["admin","b-admin"],["morph","b-morph"],["fua","b-fua"]].forEach(([key,cls])=>{
+const boundaryMeta={
+ admin:{label:"Administrative city",note:"Legal jurisdiction",fill:"b-admin-fill",outline:"b-admin-outline",tol:2.4},
+ morph:{label:"Built-up city · 2020",note:"Physical urban extent",fill:"b-morph-fill",outline:"b-morph-outline",tol:12},
+ fua:{label:"Functional urban area · 2015",note:"Modelled wider urban system",fill:"b-fua-fill",outline:"b-fua-outline",tol:3.2}
+};
+Object.entries(boundaryMeta).forEach(([key,meta])=>{
   BOUNDARY[key].features.forEach(f=>{
-    const p=makeSvg("path",{d:pathFor(f.geometry,bproj),class:"boundary-path "+cls,"data-kind":key},bLayer);
+    makeSvg("path",{d:outerPath(f.geometry,bproj,meta.tol),class:`boundary-fill ${meta.fill}`,"data-kind":key},bLayer);
+    makeSvg("path",{d:outerPath(f.geometry,bproj,meta.tol),class:`boundary-outline ${meta.outline}`,"data-kind":key},bLayer);
   });
 });
 BOUNDARY.sites.features.forEach(f=>{
   const [x,y]=bproj(f.geometry.coordinates);
-  makeSvg("circle",{cx:x,cy:y,r:6.5,class:"site"},$("#siteLayers"));
-  const t=makeSvg("text",{x:x+11,y:y+4,class:"site-label"},$("#siteLayers"));t.textContent=f.properties.name||f.properties.label||"";
+  makeSvg("circle",{cx:x,cy:y,r:5.8,class:"site"},$("#siteLayers"));
+  const t=makeSvg("text",{x:x+10,y:y+4,class:"site-label"},$("#siteLayers"));t.textContent=f.properties.name||f.properties.label||"";
 });
-const boundaryStates=[
- {title:"Start with the legal city.",sub:"Municipal jurisdiction draws one edge.",note:"It answers a precise question: where does local-government jurisdiction stop?",main:"admin"},
- {title:"Now follow the built city.",sub:"Settlement keeps going.",note:"Buildings, roads and continuous urban fabric do not stop obediently at the municipal line.",main:"morph"},
- {title:"Now follow the urban system.",sub:"The edge moves again.",note:"A harmonised functional boundary answers a different question. Same place. Different city.",main:"fua"}
-];
-let bIndex=-1;
-function setBoundary(i){
-  if(i===bIndex)return;bIndex=i;
-  const s=boundaryStates[i],copy=$("#boundaryCopy");
-  $("#boundaryTitle").textContent=s.title;$("#boundarySub").textContent=s.sub;$("#boundaryNote").textContent=s.note;
-  copy.classList.add("swap");requestAnimationFrame(()=>requestAnimationFrame(()=>copy.classList.remove("swap")));
-  $$(".boundary-path").forEach(p=>{
-    const on=p.dataset.kind===s.main;
-    p.style.opacity=on?"1":"0";
-    p.style.fillOpacity=on?"1":".18";
-    p.style.strokeWidth=on?"2.4":"1.2";
+function setBoundaryKind(kind){
+  const meta=boundaryMeta[kind];
+  $$(".boundary-fill,.boundary-outline").forEach(el=>{
+    const k=el.dataset.kind;
+    el.classList.toggle("visible",k===kind);
+    el.classList.toggle("context",k!==kind && ((kind==="morph"&&k==="admin")||(kind==="fua"&&k==="admin")));
   });
-  $$(".boundary .progress-dots i").forEach((d,j)=>d.classList.toggle("on",j===i));
+  $("#boundaryDefinition").textContent=meta.label;$("#boundaryDefinitionNote").textContent=meta.note;
+  $$(".boundary-step").forEach(el=>el.classList.toggle("active",el.dataset.boundary===kind));
 }
 
 /* world + life */
-const worldX=lon=>(lon+180)/360*1200, worldY=lat=>(90-lat)/180*600;
+const worldX=lon=>(lon+180)/360*1200;
+const worldY=lat=>{const cl=Math.max(-80,Math.min(80,lat))*Math.PI/180;return (1-Math.log(Math.tan(Math.PI/4+cl/2))/Math.PI)/2*600};
 const worldProj=([lon,lat])=>[worldX(lon),worldY(lat)];
-const worldLayer=$("#worldLayer");
+const worldLayer=$("#worldLayer"), regionalBorders=$("#regionalBorders");
 const africaNames=new Set(["South Africa","Lesotho","eSwatini","Swaziland","Zimbabwe","Mozambique","Malawi","Zambia","Botswana","Namibia","Angola","Dem. Rep. Congo","Democratic Republic of the Congo","Tanzania","United Republic of Tanzania","Kenya","Ethiopia"]);
 WORLD.features.forEach(f=>{
-  const p=makeSvg("path",{d:pathFor(f.geometry,worldProj),class:"world-country"+(africaNames.has(f.properties.name)?" africa":"")},worldLayer);
+  makeSvg("path",{d:pathFor(f.geometry,worldProj),class:"world-country"+(africaNames.has(f.properties.name)?" africa":"")},worldLayer);
+  if(africaNames.has(f.properties.name))makeSvg("path",{d:pathFor(f.geometry,worldProj),class:"regional-border"},regionalBorders);
 });
 const localLayer=$("#localLayer");
-BOUNDARY.admin.features.forEach(f=>makeSvg("path",{d:pathFor(f.geometry,worldProj),class:"local-boundary"},localLayer));
-BOUNDARY.morph.features.forEach(f=>makeSvg("path",{d:pathFor(f.geometry,worldProj),class:"local-boundary",style:"stroke:rgba(44,141,132,.55)"},localLayer));
-
+BOUNDARY.admin.features.forEach(f=>makeSvg("path",{d:outerPath(f.geometry,worldProj,.18),class:"local-boundary"},localLayer));
 const origin=[worldX(BOUNDARY.center[0]),worldY(BOUNDARY.center[1])];
 makeSvg("circle",{cx:origin[0],cy:origin[1],r:.12,class:"origin-dot",id:"originDot"},$("#nodeLayer"));
 let ot=makeSvg("text",{x:origin[0]+5,y:origin[1]-4,class:"map-label"},$("#nodeLayer"));ot.textContent="Johannesburg";
@@ -679,68 +756,49 @@ function classify(f){
 }
 BOUNDARY.future.features.forEach(f=>{
   const dest=[worldX(f.geometry.coordinates[0]),worldY(f.geometry.coordinates[1])];
-  const kind=classify(f),mx=(origin[0]+dest[0])/2,my=(origin[1]+dest[1])/2-14-Math.min(40,Math.abs(dest[0]-origin[0])*.08);
+  const kind=classify(f),dx=dest[0]-origin[0],dy=dest[1]-origin[1],len=Math.max(.001,Math.hypot(dx,dy)),bend=kind==="local"?len*.18:kind==="regional"?Math.min(12,Math.max(.45,len*.13)):Math.min(34,Math.max(2.5,len*.16)),sign=(f.properties.rank%2?1:-1);
+  const mx=(origin[0]+dest[0])/2+(-dy/len)*bend*sign,my=(origin[1]+dest[1])/2+(dx/len)*bend*sign;
   const arc=makeSvg("path",{d:`M${origin[0]},${origin[1]} Q${mx},${my} ${dest[0]},${dest[1]}`,class:`life-arc ${kind}`,"data-kind":kind},$("#arcLayer"));
   const n=makeSvg("circle",{cx:dest[0],cy:dest[1],r:f.properties.weight===3?2.9:f.properties.weight===2?2.2:1.65,class:`life-node ${f.properties.aggregation==="country"?"country":""} ${kind}`,"data-kind":kind,"data-weight":f.properties.weight},$("#nodeLayer"));
   const title=makeSvg("title",{},n);title.textContent=`${f.properties.label} · ${f.properties.countBand} respondents`;
-  if(false){
-    const t=makeSvg("text",{x:dest[0]+4,y:dest[1]-3,class:"map-label",opacity:"0","data-label-kind":kind},$("#nodeLayer"));t.textContent=f.properties.label;
+  if([1,2,9].includes(f.properties.rank)){
+    const label=f.properties.rank===1?"Zimbabwe":f.properties.rank===2?"Mozambique":"United States";
+    const t=makeSvg("text",{x:dest[0]+5,y:dest[1]-4,class:"dest-label","data-label-kind":kind,"data-rank":f.properties.rank},$("#destLabelLayer"));t.textContent=label;
   }
 });
+function boxFromLonLat(lon0,latTop,lon1,latBottom){
+  const x0=worldX(lon0),x1=worldX(lon1),y0=worldY(latTop),y1=worldY(latBottom);return [x0,y0,x1-x0,y1-y0];
+}
 const boxes={
-  local:[worldX(26.7),worldY(-24.6),worldX(29.4)-worldX(26.7),worldY(-27.5)-worldY(-24.6)],
-  regional:[worldX(10),worldY(12),worldX(43)-worldX(10),worldY(-36)-worldY(12)],
-  global:[worldX(-85),worldY(48),worldX(46)-worldX(-85),worldY(-40)-worldY(48)]
+ local:boxFromLonLat(27.55,-25.55,28.55,-26.72),
+ regional:boxFromLonLat(8,17,48,-38),
+ global:boxFromLonLat(-105,58,55,-45)
 };
-function mixBox(a,b,t){return a.map((v,i)=>lerp(v,b[i],t))}
-function setViewBox(box){
-  $("#lifeSvg").setAttribute("viewBox",box.map(v=>v.toFixed(2)).join(" "));
-  const w=box[2], base=w*.0048;
-  $("#originDot").setAttribute("r",Math.max(.03,base*1.35));
-  $$(".life-node").forEach(n=>{const wt=+(n.dataset.weight||1);n.setAttribute("r",Math.max(.025,base*(.65+wt*.28)));});
-  const fs=Math.max(.12,w*.012);
-  $$(".map-label").forEach(t=>t.setAttribute("font-size",fs));
+let currentViewBox=boxes.local.slice(),viewAnim=0;
+function setViewBoxNow(box){
+  currentViewBox=box.slice();$("#lifeSvg").setAttribute("viewBox",box.map(v=>v.toFixed(2)).join(" "));
+  const w=box[2],base=w*.0047;$("#originDot").setAttribute("r",Math.max(.035,base*1.35));
+  $$(".life-node").forEach(n=>{const wt=+(n.dataset.weight||1);n.setAttribute("r",Math.max(.028,base*(.68+wt*.27)));});
+  const fs=Math.max(.15,w*.011);$$(".map-label,.dest-label").forEach(t=>t.setAttribute("font-size",fs));
 }
-function setLifeOpacity(stage){
-  $$(".life-arc,.life-node").forEach(el=>{
-    const k=el.dataset.kind;
-    const on=stage===0?false:stage===1?(k!=="global"):true;
-    el.style.opacity=on?"1":"0";
-  });
-  $$("[data-label-kind]").forEach(el=>{
-    const k=el.dataset.labelKind;el.setAttribute("opacity",stage===0?(k==="local"?".95":"0"):stage===1?(k!=="global"?".95":"0"):".95");
-  });
-  $$(".local-boundary").forEach(el=>el.style.opacity=stage===0?"1":stage===1?".18":"0");
+function animateViewBox(target,duration=900){
+  cancelAnimationFrame(viewAnim);const from=currentViewBox.slice(),start=performance.now();
+  const ease=t=>1-Math.pow(1-t,3);
+  const frame=now=>{const t=clamp((now-start)/duration),e=ease(t),b=from.map((v,i)=>lerp(v,target[i],e));setViewBoxNow(b);if(t<1)viewAnim=requestAnimationFrame(frame)};
+  viewAnim=requestAnimationFrame(frame);
 }
-const lifeStates=[
- {title:"Start with the city.",text:"Residence gives us one anchor: Johannesburg. But the survey kept asking where other parts of the same life reached.",micro:"The city is the starting point, not the whole field."},
- {title:"Then pull back.",text:"The same Future layer reaches beyond the city: Durban, Lesotho, Zimbabwe, Mozambique, Malawi, the DRC and Ethiopia.",micro:"The city is still present. It is no longer the whole field."},
- {title:"And the field can open again.",text:"One released destination reaches as far as the United States. The point is not distance for its own sake. It is that the geography depends on the question we ask.",micro:"Guided example: Johannesburg Future destinations. Open the full Atlas to change city and life dimension."}
-];
-let lifeIndex=-1;
-function setLifeText(i){
-  if(i===lifeIndex)return;lifeIndex=i;const s=lifeStates[i],copy=$("#lifeCopy");
-  $("#lifeTitle").textContent=s.title;$("#lifeText").textContent=s.text;$("#lifeMicro").textContent=s.micro;
-  copy.classList.add("swap");requestAnimationFrame(()=>requestAnimationFrame(()=>copy.classList.remove("swap")));
-  $$(".life-dots i").forEach((d,j)=>d.classList.toggle("on",j===i));
-  $("#atlasLink").classList.toggle("show",i===2);
+function setLifeStage(stage){
+  const kind=stage===0?"local":stage===1?"regional":"global";
+  $$(".life-step").forEach(el=>el.classList.toggle("active",+el.dataset.lifeStage===stage));
+  $$(".life-arc,.life-node").forEach(el=>{const k=el.dataset.kind;const on=stage===0?k==="local":stage===1?k!=="global":true;el.style.opacity=on?"1":"0"});
+  $$(".dest-label").forEach(el=>{const rank=+el.dataset.rank;const on=(stage===1&&(rank===1||rank===2))||(stage===2&&rank===9);el.style.opacity=on?"1":"0"});
+  $$(".local-boundary").forEach(el=>el.style.opacity=stage===0?"1":stage===1?".14":"0");
+  $$(".regional-border").forEach(el=>el.style.opacity=stage===1?".45":stage===2?".12":"0");
+  $("#lifeScaleLabel").textContent=stage===0?"City":stage===1?"Region":"World";
+  animateViewBox(stage===0?boxes.local:stage===1?boxes.regional:boxes.global);
 }
 
 /* Future */
-const futureStates=[
- {h:"2 years",pct:10.2,title:"Two years from now.",text:"At the shortest horizon, most classifiable futures remained in the current city.",note:"The geography of the future was still mostly <em>here.</em>"},
- {h:"10 years",pct:36.7,title:"Ten years from now.",text:"As the horizon lengthened, elsewhere became much more common.",note:"Time changed the answer to <em>where.</em>"},
- {h:"retirement",pct:58.6,title:"Then ask about retirement.",text:"By retirement, a majority of classifiable futures lay beyond the current city.",note:"The farther ahead people looked, <em>the less the current city contained the future.</em>"}
-];
-let futIndex=-1;
-function setFuture(i){
-  if(i===futIndex)return;futIndex=i;const s=futureStates[i],copy=$("#futureCopy");
-  $("#futureTitle").textContent=s.title;$("#futureText").textContent=s.text;
-  copy.classList.add("swap");requestAnimationFrame(()=>requestAnimationFrame(()=>copy.classList.remove("swap")));
-  $("#futureHorizon").textContent=s.h;$("#futurePct").textContent=Math.round(s.pct)+"%";$("#shareFill").style.width=s.pct+"%";$("#futureNote").innerHTML=s.note;
-  $$(".future-dots i").forEach((d,j)=>d.classList.toggle("on",j===i));
-}
-
 /* Routing */
 const routeCaptions={
  place:"When housing was the problem, family and friends dominated the first routes people named.",
@@ -764,27 +822,19 @@ $$(".route-buttons button").forEach(b=>b.addEventListener("click",()=>drawRoute(
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}}),{threshold:.12});
 $$(".reveal").forEach(el=>io.observe(el));
 
-/* scroll choreography */
-let ticking=false;
-function scrollyProgress(id){
-  const el=$(id),r=el.getBoundingClientRect(),den=r.height-innerHeight;
-  return clamp(-r.top/den);
+/* editorial step choreography */
+function observeSteps(selector,callback){
+  const steps=$$(selector);
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)callback(e.target)});
+  },{rootMargin:"-34% 0px -46% 0px",threshold:0});
+  steps.forEach(el=>obs.observe(el));
 }
-function update(){
-  ticking=false;
-  const bp=scrollyProgress("#boundary");
-  setBoundary(Math.min(2,Math.floor(bp*3)));
-  const lp=scrollyProgress("#life");
-  let li=lp<.34?0:lp<.68?1:2;setLifeText(li);setLifeOpacity(li);
-  let box;
-  if(lp<.5){const t=clamp(lp/.5);box=mixBox(boxes.local,boxes.regional,t);}
-  else{const t=clamp((lp-.5)/.5);box=mixBox(boxes.regional,boxes.global,t);}
-  setViewBox(box);
-  const fp=scrollyProgress("#future");setFuture(fp<.34?0:fp<.68?1:2);
-}
-window.addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
-window.addEventListener("resize",update);
-setBoundary(0);setLifeText(0);setLifeOpacity(0);setViewBox(boxes.local);setFuture(0);drawRoute("place");update();
+observeSteps(".boundary-step",el=>setBoundaryKind(el.dataset.boundary));
+observeSteps(".life-step",el=>setLifeStage(+el.dataset.lifeStage));
+const futureCardObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("on")}),{threshold:.35});
+$$(".future-card").forEach(el=>futureCardObserver.observe(el));
+setBoundaryKind("admin");setViewBoxNow(boxes.local);setLifeStage(0);drawRoute("place");
 </script>
 </body>
 </html>
