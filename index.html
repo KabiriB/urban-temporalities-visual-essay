@@ -260,14 +260,41 @@ footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26p
     send(step.dataset.state);
   }
 
-  const observer = new IntersectionObserver(entries => {
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) activate(visible.target);
-  }, {rootMargin:'-28% 0px -38% 0px',threshold:[0,.1,.25,.5,.75]});
+  let scheduled = false;
+  let activeState = 'question';
 
-  steps.forEach(step => observer.observe(step));
+  function chooseActiveStep(){
+    scheduled = false;
+    const targetY = window.innerWidth <= 800 ? window.innerHeight * .72 : window.innerHeight * .50;
+    let best = steps[0];
+    let bestDistance = Infinity;
+
+    for (const step of steps) {
+      const rect = step.getBoundingClientRect();
+      const center = rect.top + rect.height * .5;
+      const distance = Math.abs(center - targetY);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        best = step;
+      }
+    }
+
+    const nextState = best.dataset.state;
+    if (nextState !== activeState) {
+      activeState = nextState;
+      activate(best);
+    }
+  }
+
+  function scheduleStepCheck(){
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(chooseActiveStep);
+  }
+
+  window.addEventListener('scroll',scheduleStepCheck,{passive:true});
+  window.addEventListener('resize',scheduleStepCheck);
+  scheduleStepCheck();
 
   window.addEventListener('message', e => {
     if (e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready') {
