@@ -475,17 +475,23 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     window.parent.postMessage({source:'urban-temporalities-atlas',type:'released'},'*');
   }
 
+  let storyCityToken=0;
+
   function switchStoryCity(which,after){
     if(which===activeCity){
       if(after) after();
       return;
     }
+
+    const token=++storyCityToken;
     const targetLife=activeLife;
     const hadLife=lifeOn;
 
-    if(hadLife) setStoryLifePresence(.10,300);
+    if(hadLife) setStoryLifePresence(.10,220);
 
     const go=()=>{
+      if(token!==storyCityToken) return;
+
       activeCity=which;
       if(activeBoundary==='admin'&&!C().adminAvailable) activeBoundary='morph';
       updateCityUI();
@@ -500,6 +506,14 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
         activeLife=targetLife;
         setLayerData(activeLife);
         setStoryLifePresence(.10,0);
+
+        // A city change must always move the viewport, even when
+        // the life layer and boundary type remain unchanged.
+        fitStoryLife(activeLife);
+        requestAnimationFrame(()=>setStoryLifePresence(1,820));
+      }else{
+        const targetBoundary=activeBoundary==='admin'&&!c.adminAvailable?'morph':activeBoundary;
+        fitStoryBoundary(targetBoundary);
       }
 
       updateAccessibleSummary();
@@ -507,7 +521,7 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     };
 
     if(REDUCE_MOTION) go();
-    else setTimeout(go,320);
+    else setTimeout(go,240);
   }
 
   function applyStoryState(d){
