@@ -478,12 +478,14 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
   let storyCityToken=0;
 
   function switchStoryCity(which,after){
+    // Every request advances the token, including a return to the
+    // currently visible city, so any older delayed switch is cancelled.
+    const token=++storyCityToken;
+
     if(which===activeCity){
       if(after) after();
       return;
     }
-
-    const token=++storyCityToken;
     const targetLife=activeLife;
     const hadLife=lifeOn;
 
