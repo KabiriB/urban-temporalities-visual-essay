@@ -60,7 +60,30 @@ button:focus-visible,summary:focus-visible,.maplibregl-canvas:focus-visible{outl
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   body:not(.life-on) #lifeBtn{animation:none!important;box-shadow:0 0 0 2px rgba(232,189,105,.24)}
 }
-</style></head><body>
+</style>
+<style id="story-mode-css">
+body.story-mode .header,
+body.story-mode .city-tabs,
+body.story-mode .legend,
+body.story-mode .site-note,
+body.story-mode .control-panel,
+body.story-mode .reveal-title,
+body.story-mode .statement,
+body.story-mode .badge{display:none!important}
+body.story-mode #map:after{
+  background:
+    radial-gradient(circle at 66% 46%,rgba(3,9,10,.01) 0 24%,rgba(3,9,10,.08) 56%,rgba(3,9,10,.48) 100%),
+    linear-gradient(90deg,rgba(3,9,10,.72) 0%,rgba(3,9,10,.36) 24%,rgba(3,9,10,.08) 48%,transparent 68%);
+}
+body.story-mode .maplibregl-ctrl-bottom-right{opacity:.58}
+body.story-mode .maplibregl-ctrl-attrib{font-size:9px;background:rgba(5,11,12,.72)}
+@media(max-width:760px){
+  body.story-mode #map:after{
+    background:linear-gradient(0deg,rgba(3,9,10,.46),rgba(3,9,10,.04) 48%,rgba(3,9,10,.16));
+  }
+}
+</style>
+</head><body>
 <div id="app"><div id="map" role="img" aria-label="Interactive map of city boundaries and aggregated life geographies" aria-describedby="mapStatus"></div><div id="mapStatus" class="sr-only" aria-live="polite"></div>
 <div class="city-tabs" role="group" aria-label="Choose study city"><button class="active" data-city="Johannesburg" aria-pressed="true">Johannesburg</button><button data-city="Accra" aria-pressed="false">Accra</button><button data-city="Nairobi" aria-pressed="false">Nairobi</button></div>
 <div class="header" aria-live="polite"><div class="kicker">Urban Temporalities · Atlas 2026</div><h1 id="heroTitle">Where does<br>Johannesburg end?</h1><div class="deck">Begin with the city. Change the line. Then change the dimension of the life.</div><div class="rule"></div><div class="chapter" id="chapter">Same place. Three different definitions of the city.</div><div class="detail"><div class="detail-index" id="detailIndex">01 / 03</div><div class="detail-copy"><div class="detail-title" id="detailTitle">Administrative city</div><div class="detail-text" id="detailText">Where formal municipal jurisdiction stops.</div></div></div></div>
@@ -218,4 +241,109 @@ map.on('load',()=>{
  const popupHandler=e=>{if(!lifeOn||!e.features?.length)return;const p=e.features[0].properties;selectedNodeProps=p;showNodeInfo(p);const label=publicLabel(p);const kind=p.aggregation==='country'?'country-level aggregate':'mapped locality';new maplibregl.Popup({closeButton:false,offset:10}).setLngLat(e.lngLat).setHTML(`<div class="popup-title">${esc(label)}</div><div class="popup-meta">${p.aggregation==='country'?'Shown at country level to protect respondent privacy.':esc(p.subLabel)}<br>${esc(p.countBand)} respondents · ${kind}</div>`).addTo(map)};map.on('click','life-core',popupHandler);map.on('click','life-country',popupHandler);
 });
 document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('click',()=>setBoundaryVisibility(b.dataset.boundary)));document.querySelectorAll('[data-life]').forEach(b=>b.addEventListener('click',()=>switchLife(b.dataset.life)));document.querySelectorAll('[data-city]').forEach(b=>b.addEventListener('click',()=>switchCity(b.dataset.city)));document.getElementById('lifeBtn').addEventListener('click',()=>lifeOn?returnCity():revealLife());let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{lifeOn?fitLife(activeLife):fitBoundary(activeBoundary)},160)});
-</script></body></html>
+</script>
+<script id="story-mode-bridge">
+(() => {
+  const params = new URLSearchParams(location.search);
+  const STORY = params.get('story') === '1';
+  if (!STORY) return;
+  document.body.classList.add('story-mode');
+
+  const originalMapPadding = mapPadding;
+  const originalLifePadding = lifePadding;
+
+  mapPadding = function(){
+    if (!document.body.classList.contains('story-mode')) return originalMapPadding();
+    if (window.innerWidth <= 760) return {top:34,bottom:34,left:30,right:30};
+    return {top:70,bottom:70,left:Math.round(window.innerWidth * .39),right:70};
+  };
+
+  lifePadding = function(){
+    if (!document.body.classList.contains('story-mode')) return originalLifePadding();
+    if (window.innerWidth <= 760) return {top:28,bottom:28,left:26,right:26};
+    return {top:58,bottom:58,left:Math.round(window.innerWidth * .31),right:54};
+  };
+
+  function setLayerVisibility(id, visible){
+    if (map.getLayer(id)) map.setLayoutProperty(id,'visibility',visible ? 'visible' : 'none');
+  }
+
+  function storyBoundaries(list, active, noFit){
+    const selected = Array.isArray(list) ? list : [];
+    const chosen = active || selected[selected.length - 1] || activeBoundary;
+    activeBoundary = chosen;
+
+    ['admin','morph','fua'].forEach(b => {
+      const shown = selected.includes(b) && !(b === 'admin' && !C().adminAvailable);
+      ['fill','glow','line'].forEach(kind => setLayerVisibility(b + '-' + kind, shown));
+      if (!shown) return;
+      const isActive = b === chosen;
+      if (map.getLayer(b + '-fill')) {
+        const fill = b === 'morph' ? (isActive ? .12 : .025) : b === 'fua' ? (isActive ? .035 : .008) : 0;
+        map.setPaintProperty(b + '-fill','fill-opacity',lifeOn ? fill * .55 : fill);
+      }
+      if (map.getLayer(b + '-glow')) {
+        map.setPaintProperty(b + '-glow','line-opacity',lifeOn ? (isActive ? .06 : .02) : (isActive ? .14 : .035));
+      }
+      if (map.getLayer(b + '-line')) {
+        map.setPaintProperty(b + '-line','line-opacity',lifeOn ? (isActive ? .34 : .16) : (isActive ? .96 : .26));
+      }
+    });
+    syncPressed();
+    updateAccessibleSummary();
+    if (!noFit) fitBoundary(chosen);
+  }
+
+  function clearBoundaries(){
+    ['admin','morph','fua'].forEach(b => ['fill','glow','line'].forEach(kind => setLayerVisibility(b + '-' + kind,false)));
+    hideLife();
+    if (lifeOn) {
+      lifeOn = false;
+      document.body.classList.remove('life-on');
+    }
+    fitBoundary('admin');
+  }
+
+  function applyStoryState(d){
+    if (!d || d.source !== 'urban-temporalities-essay') return;
+    if (d.city && d.city !== activeCity) switchCity(d.city);
+
+    if (d.boundaries) {
+      if (d.boundaries.length === 0) clearBoundaries();
+      else storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],!!d.noFit);
+    }
+
+    if (d.life === false && lifeOn) returnCity();
+
+    if (d.life === true) {
+      const layer = d.lifeLayer || activeLife || 'Movement';
+      activeLife = layer;
+      if (!lifeOn) revealLife();
+      else if (activeLife !== layer) switchLife(layer);
+      if (d.boundaries && d.boundaries.length) {
+        setTimeout(() => storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],true), REDUCE_MOTION ? 0 : 80);
+      }
+    }
+
+    if (d.lifeLayer && lifeOn && d.lifeLayer !== activeLife) switchLife(d.lifeLayer);
+  }
+
+  const queue = [];
+  let ready = false;
+
+  window.addEventListener('message', e => {
+    const d = e.data;
+    if (!d || d.source !== 'urban-temporalities-essay') return;
+    if (!ready) queue.push(d);
+    else applyStoryState(d);
+  });
+
+  map.on('load', () => {
+    ready = true;
+    clearBoundaries();
+    while (queue.length) applyStoryState(queue.shift());
+    window.parent.postMessage({source:'urban-temporalities-atlas',type:'ready'},'*');
+  });
+})();
+</script>
+</body></html>
