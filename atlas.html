@@ -475,8 +475,11 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     window.parent.postMessage({source:'urban-temporalities-atlas',type:'released'},'*');
   }
 
-  function switchStoryCity(which){
-    if(which===activeCity) return;
+  function switchStoryCity(which,after){
+    if(which===activeCity){
+      if(after) after();
+      return;
+    }
     const targetLife=activeLife;
     const hadLife=lifeOn;
 
@@ -497,13 +500,10 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
         activeLife=targetLife;
         setLayerData(activeLife);
         setStoryLifePresence(.10,0);
-        storyBoundaries(storySelectedBoundaries,activeBoundary,true);
-        fitStoryLife(activeLife);
-        requestAnimationFrame(()=>setStoryLifePresence(1,820));
-      }else if(storySelectedBoundaries.length){
-        storyBoundaries(storySelectedBoundaries,activeBoundary,false);
       }
+
       updateAccessibleSummary();
+      if(after) after();
     };
 
     if(REDUCE_MOTION) go();
@@ -521,7 +521,11 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
       if(window.innerWidth<=760) map.dragPan.enable();
       map.resize();
     }
-    if (d.city && d.city !== activeCity) switchStoryCity(d.city);
+    if (d.city && d.city !== activeCity) {
+      const nextState={...d,city:null};
+      switchStoryCity(d.city,()=>applyStoryState(nextState));
+      return;
+    }
 
     if (d.life === false && lifeOn) exitStoryLife();
 
