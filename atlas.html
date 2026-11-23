@@ -353,6 +353,38 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     updateAccessibleSummary();
   }
 
+  let storyLifeToken = 0;
+
+  function setStoryLifeOpacity(show,duration){
+    const sparse=(LIFE()[activeLife]?.features||[]).length<=2;
+    const dur=REDUCE_MOTION?0:duration;
+    for(let i=0;i<3;i++){
+      const id='life-arcs-'+i;
+      if(map.getLayer(id)){
+        map.setPaintProperty(id,'line-opacity-transition',{duration:dur,delay:0});
+        map.setPaintProperty(id,'line-opacity',show
+          ? (sparse?['match',['get','weight'],4,.96,3,.90,2,.84,.78]:['match',['get','weight'],4,.86,3,.72,2,.56,.42])
+          : 0);
+      }
+    }
+    if(map.getLayer('life-halo')){
+      map.setPaintProperty('life-halo','circle-opacity-transition',{duration:dur,delay:0});
+      map.setPaintProperty('life-halo','circle-opacity',show?(sparse?.28:.16):0);
+    }
+    if(map.getLayer('life-core')){
+      map.setPaintProperty('life-core','circle-opacity-transition',{duration:dur,delay:0});
+      map.setPaintProperty('life-core','circle-opacity',show?.96:0);
+    }
+    if(map.getLayer('life-country')){
+      map.setPaintProperty('life-country','circle-opacity-transition',{duration:dur,delay:0});
+      map.setPaintProperty('life-country','circle-opacity',show?.96:0);
+    }
+    if(map.getLayer('life-label')){
+      map.setPaintProperty('life-label','text-opacity-transition',{duration:dur,delay:0});
+      map.setPaintProperty('life-label','text-opacity',show?.96:0);
+    }
+  }
+
   function revealStoryLife(layer){
     activeLife = layer || 'Movement';
     lifeOn = true;
@@ -360,10 +392,27 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     document.getElementById('lifeBtn').textContent='Return to city';
     syncPressed();
     setLayerData(activeLife);
+    setStoryLifeOpacity(false,0);
     fitLife(activeLife);
-    showLifeSequence();
     storyBoundaries(storySelectedBoundaries,activeBoundary,true);
+    requestAnimationFrame(()=>setStoryLifeOpacity(true,760));
     updateAccessibleSummary();
+  }
+
+  function switchStoryLife(layer){
+    if(!lifeOn || layer===activeLife) return;
+    const token=++storyLifeToken;
+    setStoryLifeOpacity(false,260);
+    setTimeout(()=>{
+      if(token!==storyLifeToken) return;
+      activeLife=layer;
+      setLayerData(activeLife);
+      setStoryLifeOpacity(false,0);
+      fitLife(activeLife);
+      requestAnimationFrame(()=>setStoryLifeOpacity(true,680));
+      storyBoundaries(storySelectedBoundaries,activeBoundary,true);
+      updateAccessibleSummary();
+    },REDUCE_MOTION?0:280);
   }
 
   function applyStoryState(d){
@@ -381,7 +430,7 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
       const layer = d.lifeLayer || activeLife || 'Movement';
       activeBoundary = d.activeBoundary || activeBoundary;
       if (!lifeOn) revealStoryLife(layer);
-      else if (activeLife !== layer) switchLife(layer);
+      else if (activeLife !== layer) switchStoryLife(layer);
       if (d.boundaries && d.boundaries.length) {
         setTimeout(() => storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],true), REDUCE_MOTION ? 0 : 90);
       }
