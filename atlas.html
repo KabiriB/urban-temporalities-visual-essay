@@ -308,24 +308,28 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     if (!d || d.source !== 'urban-temporalities-essay') return;
     if (d.city && d.city !== activeCity) switchCity(d.city);
 
-    if (d.boundaries) {
-      if (d.boundaries.length === 0) clearBoundaries();
-      else storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],!!d.noFit);
-    }
-
     if (d.life === false && lifeOn) returnCity();
 
     if (d.life === true) {
       const layer = d.lifeLayer || activeLife || 'Movement';
-      activeLife = layer;
-      if (!lifeOn) revealLife();
-      else if (activeLife !== layer) switchLife(layer);
+      const previousLayer = activeLife;
+      activeBoundary = d.activeBoundary || (d.boundaries && d.boundaries[d.boundaries.length-1]) || activeBoundary;
+      if (!lifeOn) {
+        activeLife = layer;
+        revealLife();
+      } else if (previousLayer !== layer) {
+        switchLife(layer);
+      }
       if (d.boundaries && d.boundaries.length) {
         setTimeout(() => storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],true), REDUCE_MOTION ? 0 : 80);
       }
+      return;
     }
 
-    if (d.lifeLayer && lifeOn && d.lifeLayer !== activeLife) switchLife(d.lifeLayer);
+    if (d.boundaries) {
+      if (d.boundaries.length === 0) clearBoundaries();
+      else storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],!!d.noFit);
+    }
   }
 
   const queue = [];
