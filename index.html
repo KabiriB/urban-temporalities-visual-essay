@@ -4,9 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#050b0c">
-<meta name="robots" content="noindex">
-<title>The City Does Not Contain the Life — Final ACMS Edition</title>
-<meta name="description" content="Urban Temporalities visual essay following city edges, life geographies, belonging and imagined futures across Accra, Johannesburg and Nairobi.">
+<meta name="robots" content="index,follow">
+<title>The City Does Not Contain the Life — Urban Temporalities</title>
+<meta name="description" content="An interactive visual essay following city edges, life geographies, belonging and imagined futures across Accra, Johannesburg and Nairobi.">
+<link rel="canonical" href="https://kabirib.github.io/urban-temporalities-visual-essay/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The City Does Not Contain the Life">
+<meta property="og:description" content="An interactive visual essay following city edges, life geographies, belonging and imagined futures across Accra, Johannesburg and Nairobi.">
+<meta property="og:url" content="https://kabirib.github.io/urban-temporalities-visual-essay/">
+<meta property="og:image" content="https://kabirib.github.io/urban-temporalities-visual-essay/assets/hero-accra.jpg">
+<meta property="og:image:alt" content="Urban Temporalities field photograph">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The City Does Not Contain the Life">
+<meta name="twitter:description" content="An interactive visual essay following city edges, life geographies, belonging and imagined futures across Accra, Johannesburg and Nairobi.">
+<meta name="twitter:image" content="https://kabirib.github.io/urban-temporalities-visual-essay/assets/hero-accra.jpg">
 <link rel="preload" as="image" href="assets/hero-accra.jpg" fetchpriority="high">
 <script>document.documentElement.classList.add('js')</script>
 <style>
@@ -698,7 +709,10 @@ a{color:inherit}
   function sendReprise(name){
     repriseLatest = name;
     repriseTitle.innerHTML = repriseLabels[name] || repriseLabels.accra;
-    if (name !== 'release') repriseShell.classList.remove('atlas-unlocked');
+    if (name !== 'release') {
+      repriseShell.classList.remove('atlas-unlocked');
+      repriseFrame.setAttribute('tabindex','-1');
+    }
     if (!repriseReady || !repriseStates[name]) return;
     if (name !== 'release') repriseFrame.contentWindow.postMessage(repriseStates[name],'*');
   }
@@ -740,11 +754,13 @@ a{color:inherit}
   if (atlasEnter) {
     atlasEnter.addEventListener('click',() => {
       repriseShell.classList.add('atlas-unlocked');
+      repriseFrame.setAttribute('tabindex','0');
       if (!repriseReady) {
         pendingAtlasRelease = true;
         return;
       }
       repriseFrame.contentWindow.postMessage({source:'urban-temporalities-essay',release:true},'*');
+      setTimeout(()=>repriseFrame.focus(),120);
     });
   }
 
