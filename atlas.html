@@ -435,6 +435,11 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
       releaseAtlas();
       return;
     }
+    if (!document.body.classList.contains('story-mode')) {
+      document.body.classList.add('story-mode');
+      if(window.innerWidth<=760) map.dragPan.enable();
+      map.resize();
+    }
     if (d.city && d.city !== activeCity) switchCity(d.city);
 
     if (d.life === false && lifeOn) exitStoryLife();
