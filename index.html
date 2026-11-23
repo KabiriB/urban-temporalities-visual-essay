@@ -163,14 +163,20 @@ a{color:inherit}
 .reprise-copy p{font:400 clamp(18px,1.5vw,23px)/1.43 var(--serif);color:#d0d9d5;margin:0}
 .reprise-copy .note{font-size:9px;line-height:1.55;letter-spacing:.07em;color:#8d9b96;margin-top:16px}
 .release-step{min-height:100svh}
-.release-step .reprise-copy{border-left:0;background:rgba(3,9,10,.64)}
-.release-step .reprise-copy h2{font-size:clamp(49px,5vw,78px)}
+.release-step .reprise-copy{width:min(560px,100%);border-left:0;background:rgba(3,9,10,.78);padding:34px 34px 32px;box-shadow:0 28px 90px rgba(0,0,0,.28)}
+.release-step .reprise-copy h2{font-size:clamp(54px,5.4vw,84px);margin-bottom:20px}
+.atlas-actions{display:grid;grid-template-columns:1fr;gap:11px;margin-top:28px}
+.atlas-enter,.atlas-full-link{width:100%;border:0;text-align:left;text-decoration:none;cursor:pointer;padding:17px 18px;display:flex;justify-content:space-between;align-items:center;gap:20px;font:700 10px/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase}
+.atlas-enter{background:var(--gold);color:#101715}
+.atlas-enter span,.atlas-full-link span{font-weight:600;letter-spacing:.08em;opacity:.74}
+.atlas-full-link{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.20);color:#f0ece3}
+.atlas-enter:focus-visible,.atlas-full-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .reprise-shell.atlas-unlocked .reprise-map iframe{pointer-events:auto}
 .reprise-shell.atlas-unlocked .reprise-map:after,
 .reprise-shell.atlas-unlocked .reprise-title,
 .reprise-shell.atlas-unlocked .reprise-source{opacity:0}
-.reprise-shell.atlas-unlocked .release-step .reprise-copy{opacity:0;transform:translateY(-10px);pointer-events:none}
-.atlas-open{position:absolute;z-index:6;right:18px;top:18px;display:none;text-decoration:none;padding:10px 14px;border:1px solid rgba(255,255,255,.26);background:rgba(4,12,13,.80);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#eee9df}
+.reprise-shell.atlas-unlocked .release-step .reprise-copy{opacity:0;transform:translateY(-12px);pointer-events:none}
+.atlas-open{position:absolute;z-index:6;left:50%;bottom:22px;transform:translateX(-50%);display:none;text-decoration:none;padding:14px 18px;border:1px solid rgba(255,255,255,.30);background:rgba(4,12,13,.88);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#eee9df;box-shadow:0 10px 38px rgba(0,0,0,.25);white-space:nowrap}
 .reprise-shell.atlas-unlocked .atlas-open{display:block}
 
 .final-close{min-height:100svh;position:relative;display:flex;align-items:flex-end;background:url("assets/nairobi-motion.jpg") 55% center/cover no-repeat;color:#f4efe5}
@@ -228,9 +234,12 @@ a{color:inherit}
   .reprise-steps{z-index:2;margin-top:0;width:100%;padding:0 18px 20px;background:#061011;pointer-events:auto}
   .reprise-step{min-height:54svh;align-items:flex-start;padding:48px 0 62px;opacity:.45;transform:none}
   .reprise-copy{width:100%;max-width:none;background:transparent!important;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0 0 0 18px}
-  .release-step{min-height:62svh}
+  .release-step{min-height:70svh}
+  .release-step .reprise-copy{padding:24px 22px 22px}
+  .atlas-actions{margin-top:22px}
+  .atlas-enter,.atlas-full-link{padding:15px 14px}
   .reprise-shell.atlas-unlocked .release-step{min-height:82svh}
-  .atlas-open{top:auto;right:12px;bottom:12px}
+  .atlas-open{left:50%;right:auto;bottom:12px;max-width:calc(100% - 24px);white-space:normal;text-align:center}
   .methods-grid{grid-template-columns:1fr}
   .credit,.site-footer{display:block;line-height:1.6}
   .credit div+div,.site-footer div+div{margin-top:8px}
@@ -497,7 +506,7 @@ a{color:inherit}
       <iframe id="repriseMap" src="atlas.html?story=1" tabindex="-1" title="Atlas of Urban Elsewheres comparing future geographies across Accra, Johannesburg and Nairobi"></iframe>
       <div class="reprise-title" id="repriseTitle"><strong>Accra</strong> · Future horizons</div>
       <div class="reprise-source">Same question · same life layer · different urban field</div>
-      <a class="atlas-open" href="atlas.html" target="_blank" rel="noopener">Open full Atlas ↗</a>
+      <a class="atlas-open" href="atlas.html" target="_blank" rel="noopener">Open the full Atlas in a new tab ↗</a>
     </div>
     <div class="reprise-steps">
       <article class="reprise-step active" data-reprise="accra">
@@ -527,9 +536,13 @@ a{color:inherit}
       <article class="reprise-step release-step" data-reprise="release">
         <div class="reprise-copy">
           <div class="step-no">Now you choose</div>
-          <h2>Explore the urban elsewheres.</h2>
+          <h2>Explore the full Atlas.</h2>
           <p>Change the city. Change its edge. Change the dimension of the life.</p>
           <div class="note">The authored argument ends here. The Atlas now becomes yours to inspect.</div>
+          <div class="atlas-actions">
+            <button class="atlas-enter" id="atlasEnter" type="button">Enter the Atlas <span>Explore here →</span></button>
+            <a class="atlas-full-link" href="atlas.html" target="_blank" rel="noopener">Open full Atlas <span>New tab ↗</span></a>
+          </div>
         </div>
       </article>
     </div>
@@ -674,7 +687,7 @@ a{color:inherit}
     accra:{source:'urban-temporalities-essay',city:'Accra',boundaries:['morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
     johannesburg:{source:'urban-temporalities-essay',city:'Johannesburg',boundaries:['admin','morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
     nairobi:{source:'urban-temporalities-essay',city:'Nairobi',boundaries:['admin','morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
-    release:{source:'urban-temporalities-essay',release:true}
+    release:{source:'urban-temporalities-essay'}
   };
   const repriseLabels = {
     accra:'<strong>Accra</strong> · Future horizons',
@@ -686,9 +699,9 @@ a{color:inherit}
   function sendReprise(name){
     repriseLatest = name;
     repriseTitle.innerHTML = repriseLabels[name] || repriseLabels.accra;
-    repriseShell.classList.toggle('atlas-unlocked',name === 'release');
+    if (name !== 'release') repriseShell.classList.remove('atlas-unlocked');
     if (!repriseReady || !repriseStates[name]) return;
-    repriseFrame.contentWindow.postMessage(repriseStates[name],'*');
+    if (name !== 'release') repriseFrame.contentWindow.postMessage(repriseStates[name],'*');
   }
 
   function activateReprise(step){
@@ -721,6 +734,15 @@ a{color:inherit}
   window.addEventListener('scroll',scheduleReprise,{passive:true});
   window.addEventListener('resize',scheduleReprise);
   scheduleReprise();
+
+  const atlasEnter = document.getElementById('atlasEnter');
+  if (atlasEnter) {
+    atlasEnter.addEventListener('click',() => {
+      if (!repriseReady) return;
+      repriseShell.classList.add('atlas-unlocked');
+      repriseFrame.contentWindow.postMessage({source:'urban-temporalities-essay',release:true},'*');
+    });
+  }
 
   window.addEventListener('message', e => {
     if(e.source === repriseFrame.contentWindow && e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready'){
