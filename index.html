@@ -60,7 +60,7 @@ a{color:inherit}
 .stage-title strong{color:#ecd08f}
 .source-note{position:absolute;z-index:3;right:22px;bottom:18px;max-width:390px;text-align:right;font-size:8px;line-height:1.5;letter-spacing:.1em;text-transform:uppercase;color:#7e8d88}
 .story-steps{position:relative;z-index:4;margin-top:-100svh;width:min(560px,43vw);padding:58svh 0 26svh 5vw;pointer-events:none}
-.story-step{min-height:82svh;display:flex;align-items:center;pointer-events:none;opacity:.28;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.story-step{min-height:82svh;display:flex;align-items:center;pointer-events:none;opacity:.28;transform:translateY(14px);transition:opacity .62s cubic-bezier(.2,.7,.2,1),transform .62s cubic-bezier(.2,.7,.2,1)}
 .story-step.active{opacity:1;transform:none}
 .story-copy{pointer-events:auto;width:min(460px,100%);padding:23px 24px 24px;background:rgba(4,12,13,.78);border-left:1px solid rgba(232,189,105,.62);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
 .story-step[data-state="morph"] .story-copy{border-left-color:rgba(103,205,189,.72)}
@@ -156,7 +156,7 @@ a{color:inherit}
 .reprise-title strong{color:#ecd08f}
 .reprise-source{position:absolute;z-index:3;right:22px;bottom:18px;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:#778682;transition:opacity .5s ease}
 .reprise-steps{position:relative;z-index:4;margin-top:-100svh;width:min(560px,43vw);padding:58svh 0 18svh 5vw;pointer-events:none}
-.reprise-step{min-height:84svh;display:flex;align-items:center;opacity:.27;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.reprise-step{min-height:84svh;display:flex;align-items:center;opacity:.27;transform:translateY(14px);transition:opacity .62s cubic-bezier(.2,.7,.2,1),transform .62s cubic-bezier(.2,.7,.2,1)}
 .reprise-step.active{opacity:1;transform:none}
 .reprise-copy{width:min(465px,100%);padding:23px 24px;background:rgba(4,12,13,.80);border-left:1px solid rgba(232,189,105,.66);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);transition:opacity .5s ease,transform .5s ease}
 .reprise-copy h2{font:400 clamp(42px,4.3vw,68px)/.94 var(--serif);letter-spacing:-.04em;margin:0 0 17px}
@@ -627,23 +627,20 @@ a{color:inherit}
   function chooseActiveStep(){
     scheduled = false;
     const targetY = window.innerWidth <= 800 ? window.innerHeight * .72 : window.innerHeight * .50;
-    let best = steps[0];
-    let bestDistance = Infinity;
+    let chosen = steps[0];
 
+    // Use a single reading line instead of competing intersection ratios.
+    // A state changes only when the next scene actually crosses that line.
     for (const step of steps) {
       const rect = step.getBoundingClientRect();
-      const center = rect.top + rect.height * .5;
-      const distance = Math.abs(center - targetY);
-      if (distance < bestDistance) {
-        bestDistance = distance;
-        best = step;
-      }
+      if (rect.top <= targetY) chosen = step;
+      else break;
     }
 
-    const nextState = best.dataset.state;
+    const nextState = chosen.dataset.state;
     if (nextState !== activeState) {
       activeState = nextState;
-      activate(best);
+      activate(chosen);
     }
   }
 
@@ -712,16 +709,18 @@ a{color:inherit}
   function chooseRepriseStep(){
     repriseScheduled = false;
     const targetY = window.innerWidth <= 800 ? window.innerHeight * .72 : window.innerHeight * .50;
-    let best = repriseSteps[0], bestDistance = Infinity;
+    let chosen = repriseSteps[0];
+
     for(const step of repriseSteps){
       const r = step.getBoundingClientRect();
-      const distance = Math.abs((r.top + r.height * .5) - targetY);
-      if(distance < bestDistance){bestDistance = distance; best = step;}
+      if(r.top <= targetY) chosen = step;
+      else break;
     }
-    const next = best.dataset.reprise;
+
+    const next = chosen.dataset.reprise;
     if(next !== repriseActive){
       repriseActive = next;
-      activateReprise(best);
+      activateReprise(chosen);
     }
   }
 
