@@ -251,6 +251,7 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
 
   const originalMapPadding = mapPadding;
   const originalLifePadding = lifePadding;
+  let storySelectedBoundaries = [];
 
   mapPadding = function(){
     if (!document.body.classList.contains('story-mode')) return originalMapPadding();
@@ -264,71 +265,126 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     return {top:58,bottom:58,left:Math.round(window.innerWidth * .31),right:54};
   };
 
-  function setLayerVisibility(id, visible){
-    if (map.getLayer(id)) map.setLayoutProperty(id,'visibility',visible ? 'visible' : 'none');
+  function makeBoundaryLayersVisible(){
+    ['admin','morph','fua'].forEach(b => {
+      if (b === 'admin' && !C().adminAvailable) return;
+      ['fill','glow','line'].forEach(kind => {
+        const id = b + '-' + kind;
+        if (map.getLayer(id)) map.setLayoutProperty(id,'visibility','visible');
+      });
+    });
+  }
+
+  function setBoundaryOpacity(b, shown, isActive){
+    const duration = REDUCE_MOTION ? 0 : 720;
+    const fillId = b + '-fill';
+    const glowId = b + '-glow';
+    const lineId = b + '-line';
+
+    if (map.getLayer(fillId)) {
+      map.setPaintProperty(fillId,'fill-opacity-transition',{duration,delay:0});
+      const fill = !shown ? 0 : b === 'morph' ? (isActive ? .12 : .025) : b === 'fua' ? (isActive ? .035 : .008) : 0;
+      map.setPaintProperty(fillId,'fill-opacity',lifeOn ? fill * .55 : fill);
+    }
+    if (map.getLayer(glowId)) {
+      map.setPaintProperty(glowId,'line-opacity-transition',{duration,delay:0});
+      const glow = !shown ? 0 : lifeOn ? (isActive ? .06 : .02) : (isActive ? .14 : .035);
+      map.setPaintProperty(glowId,'line-opacity',glow);
+    }
+    if (map.getLayer(lineId)) {
+      map.setPaintProperty(lineId,'line-opacity-transition',{duration,delay:0});
+      const line = !shown ? 0 : lifeOn ? (isActive ? .34 : .16) : (isActive ? .96 : .26);
+      map.setPaintProperty(lineId,'line-opacity',line);
+    }
+  }
+
+  function fitStoryBoundary(which){
+    const bb = boundsFor(C()[which]);
+    if (!bb) return;
+    map.fitBounds(bb,{
+      padding:mapPadding(),
+      duration:REDUCE_MOTION ? 0 : 1450,
+      maxZoom:9.0,
+      easing:t => 1 - Math.pow(1 - t,3)
+    });
   }
 
   function storyBoundaries(list, active, noFit){
     const selected = Array.isArray(list) ? list : [];
     const chosen = active || selected[selected.length - 1] || activeBoundary;
+    storySelectedBoundaries = selected.slice();
     activeBoundary = chosen;
+    makeBoundaryLayersVisible();
 
     ['admin','morph','fua'].forEach(b => {
       const shown = selected.includes(b) && !(b === 'admin' && !C().adminAvailable);
-      ['fill','glow','line'].forEach(kind => setLayerVisibility(b + '-' + kind, shown));
-      if (!shown) return;
-      const isActive = b === chosen;
-      if (map.getLayer(b + '-fill')) {
-        const fill = b === 'morph' ? (isActive ? .12 : .025) : b === 'fua' ? (isActive ? .035 : .008) : 0;
-        map.setPaintProperty(b + '-fill','fill-opacity',lifeOn ? fill * .55 : fill);
-      }
-      if (map.getLayer(b + '-glow')) {
-        map.setPaintProperty(b + '-glow','line-opacity',lifeOn ? (isActive ? .06 : .02) : (isActive ? .14 : .035));
-      }
-      if (map.getLayer(b + '-line')) {
-        map.setPaintProperty(b + '-line','line-opacity',lifeOn ? (isActive ? .34 : .16) : (isActive ? .96 : .26));
-      }
+      setBoundaryOpacity(b,shown,b === chosen);
     });
+
     syncPressed();
     updateAccessibleSummary();
-    if (!noFit) fitBoundary(chosen);
+    if (!noFit && selected.length) fitStoryBoundary(chosen);
   }
 
   function clearBoundaries(){
-    ['admin','morph','fua'].forEach(b => ['fill','glow','line'].forEach(kind => setLayerVisibility(b + '-' + kind,false)));
+    storySelectedBoundaries = [];
+    makeBoundaryLayersVisible();
+    ['admin','morph','fua'].forEach(b => setBoundaryOpacity(b,false,false));
     hideLife();
     if (lifeOn) {
       lifeOn = false;
+      selectedNodeProps = null;
       document.body.classList.remove('life-on');
+      document.getElementById('lifeBtn').textContent='Locate the life';
+      syncPressed();
+      updateAccessibleSummary();
     }
-    fitBoundary('admin');
+    fitStoryBoundary('admin');
+  }
+
+  function exitStoryLife(){
+    if (!lifeOn) return;
+    lifeOn = false;
+    selectedNodeProps = null;
+    document.body.classList.remove('life-on');
+    document.getElementById('lifeBtn').textContent='Locate the life';
+    hideLife();
+    syncPressed();
+    updateAccessibleSummary();
+  }
+
+  function revealStoryLife(layer){
+    activeLife = layer || 'Movement';
+    lifeOn = true;
+    document.body.classList.add('life-on');
+    document.getElementById('lifeBtn').textContent='Return to city';
+    syncPressed();
+    setLayerData(activeLife);
+    fitLife(activeLife);
+    showLifeSequence();
+    storyBoundaries(storySelectedBoundaries,activeBoundary,true);
+    updateAccessibleSummary();
   }
 
   function applyStoryState(d){
     if (!d || d.source !== 'urban-temporalities-essay') return;
     if (d.city && d.city !== activeCity) switchCity(d.city);
 
-    if (d.life === false && lifeOn) returnCity();
-
-    if (d.life === true) {
-      const layer = d.lifeLayer || activeLife || 'Movement';
-      const previousLayer = activeLife;
-      activeBoundary = d.activeBoundary || (d.boundaries && d.boundaries[d.boundaries.length-1]) || activeBoundary;
-      if (!lifeOn) {
-        activeLife = layer;
-        revealLife();
-      } else if (previousLayer !== layer) {
-        switchLife(layer);
-      }
-      if (d.boundaries && d.boundaries.length) {
-        setTimeout(() => storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],true), REDUCE_MOTION ? 0 : 80);
-      }
-      return;
-    }
+    if (d.life === false && lifeOn) exitStoryLife();
 
     if (d.boundaries) {
       if (d.boundaries.length === 0) clearBoundaries();
       else storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],!!d.noFit);
+    }
+
+    if (d.life === true) {
+      const layer = d.lifeLayer || activeLife || 'Movement';
+      activeBoundary = d.activeBoundary || activeBoundary;
+      if (!lifeOn) revealStoryLife(layer);
+      else if (activeLife !== layer) switchLife(layer);
+      if (d.boundaries && d.boundaries.length) {
+        setTimeout(() => storyBoundaries(d.boundaries,d.activeBoundary || d.boundaries[d.boundaries.length-1],true), REDUCE_MOTION ? 0 : 90);
+      }
     }
   }
 
@@ -344,6 +400,7 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
 
   map.on('load', () => {
     ready = true;
+    makeBoundaryLayersVisible();
     clearBoundaries();
     while (queue.length) applyStoryState(queue.shift());
     window.parent.postMessage({source:'urban-temporalities-atlas',type:'ready'},'*');
