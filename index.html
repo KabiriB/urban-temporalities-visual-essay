@@ -25,8 +25,8 @@
   --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--night)}
-body{margin:0;background:var(--night);color:var(--ink);font-family:var(--sans);line-height:1.55;text-rendering:optimizeLegibility}
+html{scroll-behavior:smooth;background:var(--night);overflow-x:clip}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--sans);line-height:1.55;text-rendering:optimizeLegibility;overflow-x:clip}
 a{color:inherit}
 .skip{position:fixed;left:14px;top:14px;z-index:999;background:#fff;color:#071011;padding:10px 13px;transform:translateY(-180%);transition:.18s}.skip:focus{transform:none}
 .kicker{font-size:10px;font-weight:760;letter-spacing:.21em;text-transform:uppercase;color:var(--gold)}
@@ -97,8 +97,9 @@ a{color:inherit}
 
 .horizons{padding:12vh 0 13vh;border-top:1px solid var(--line);background:#050c0d}
 .horizons-inner{width:min(1120px,calc(100% - 42px));margin:auto}
-.horizon-head{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:end;margin-bottom:68px}
-.horizon-head h2{font-size:clamp(46px,5.4vw,82px);line-height:.94;margin:14px 0 0}
+.horizon-head{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:64px;align-items:end;margin-bottom:68px}
+.horizon-head>*{min-width:0}
+.horizon-head h2{font-size:clamp(44px,5vw,76px);line-height:.94;margin:14px 0 0;max-width:520px}
 .horizon-head p{font:400 clamp(18px,1.55vw,24px)/1.5 var(--serif);color:#aeb9b5;margin:0;max-width:650px}
 .horizon-list{border-top:1px solid rgba(255,255,255,.16)}
 .horizon-row{display:grid;grid-template-columns:150px minmax(0,1fr) 130px;gap:28px;align-items:center;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.12)}
@@ -162,10 +163,10 @@ a{color:inherit}
 .reprise-copy h2{font:400 clamp(42px,4.3vw,68px)/.94 var(--serif);letter-spacing:-.04em;margin:0 0 17px}
 .reprise-copy p{font:400 clamp(18px,1.5vw,23px)/1.43 var(--serif);color:#d0d9d5;margin:0}
 .reprise-copy .note{font-size:9px;line-height:1.55;letter-spacing:.07em;color:#8d9b96;margin-top:16px}
-.release-step{min-height:100svh}
-.release-step .reprise-copy{width:min(560px,100%);border-left:0;background:rgba(3,9,10,.78);padding:34px 34px 32px;box-shadow:0 28px 90px rgba(0,0,0,.28)}
+.release-step{min-height:100svh;pointer-events:auto}
+.release-step .reprise-copy{width:min(560px,100%);border-left:0;background:rgba(3,9,10,.78);padding:34px 34px 32px;box-shadow:0 28px 90px rgba(0,0,0,.28);pointer-events:auto}
 .release-step .reprise-copy h2{font-size:clamp(54px,5.4vw,84px);margin-bottom:20px}
-.atlas-actions{display:grid;grid-template-columns:1fr;gap:11px;margin-top:28px}
+.atlas-actions{display:grid;grid-template-columns:1fr;gap:11px;margin-top:28px;pointer-events:auto}
 .atlas-enter,.atlas-full-link{width:100%;border:0;text-align:left;text-decoration:none;cursor:pointer;padding:17px 18px;display:flex;justify-content:space-between;align-items:center;gap:20px;font:700 10px/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase}
 .atlas-enter{background:var(--gold);color:#101715}
 .atlas-enter span,.atlas-full-link span{font-weight:600;letter-spacing:.08em;opacity:.74}
@@ -279,7 +280,7 @@ a{color:inherit}
       <div class="prelude-year">2018</div>
       <div class="prelude-copy">
         <div class="kicker" id="prelude-title">The question</div>
-        <p>We began by asking what mobility does to urban life: to belonging, relationships, political community and imagined futures.</p>
+        <p>We began in 2018 with a question: what does mobility do to urban life—to belonging, relationships, political community and the futures people imagine?</p>
         <p>The project changed as it unfolded. Methods shifted. COVID intervened. The cities resisted the neat containers we brought to them.</p>
         <p>Eight years later, one question remained: <strong>can an urban life really be contained by the city in which it is lived?</strong></p>
       </div>
@@ -307,7 +308,7 @@ a{color:inherit}
         <div class="story-copy">
           <div class="step-no">02 · Jurisdiction</div>
           <h2>Start with the legal city.</h2>
-          <p>The municipal boundary answers one precise question: where does local-government jurisdiction stop?</p>
+          <p>The municipal boundary marks one kind of edge: where local-government jurisdiction stops.</p>
           <div class="note">Services · elections · planning · accountability</div>
         </div>
       </article>
@@ -325,7 +326,7 @@ a{color:inherit}
         <div class="story-copy">
           <div class="step-no">04 · Function</div>
           <h2>Now follow the urban system.</h2>
-          <p>A wider functional boundary moves the edge again, tracing a modelled urban system of interaction.</p>
+          <p>Pull back once more and the edge moves again. A modelled functional urban area traces a wider urban system of interaction.</p>
           <div class="note">Harmonised 2015 model · not observed commuting</div>
         </div>
       </article>
@@ -341,7 +342,7 @@ a{color:inherit}
         <div class="story-copy">
           <div class="step-no">05 · Locate the life</div>
           <h2>A person does not have one geography.</h2>
-          <p>Residence gives us an anchor. Movement histories immediately make the field larger.</p>
+          <p>Residence gives us an anchor. Movement histories make the field larger.</p>
           <div class="life-tag"><b>Movement</b><span>Places lived in and moved through before the present</span></div>
           <div class="note">The city edges remain as context. The curves show relational reach, not reconstructed travel routes.</div>
         </div>
@@ -351,7 +352,7 @@ a{color:inherit}
         <div class="story-copy">
           <div class="step-no">06 · Household</div>
           <h2>Where you live is not necessarily where the household ends.</h2>
-          <p>Current household members who regularly stay elsewhere produce another geography of the same life.</p>
+          <p>Some household members regularly stay elsewhere. Their circulation makes another geography visible.</p>
           <div class="life-tag"><b>Household</b><span>Current household circulation beyond the present residence</span></div>
           <div class="note">This layer is deliberately narrow: current household members who regularly stay elsewhere, not all relatives.</div>
         </div>
@@ -360,8 +361,8 @@ a{color:inherit}
       <article class="story-step life-step" data-state="people" data-index="8">
         <div class="story-copy">
           <div class="step-no">07 · People</div>
-          <h2>Recent relationships make another map.</h2>
-          <p>People named in contact during the previous three months connect the present city to a different field.</p>
+          <h2>Then follow the people.</h2>
+          <p>Recent contact reaches across a different field.</p>
           <div class="life-tag"><b>People</b><span>Recent people ties</span></div>
           <div class="note">This is recent contact, not a map of every relative or every place someone knows.</div>
         </div>
@@ -370,8 +371,8 @@ a{color:inherit}
       <article class="story-step life-step" data-state="support" data-index="9">
         <div class="story-copy">
           <div class="step-no">08 · Support</div>
-          <h2>Obligation has a geography too.</h2>
-          <p>Money, practical help, presence and work connect current lives to people and places elsewhere.</p>
+          <h2>Support has a geography too.</h2>
+          <p>Money, practical help, presence and obligation connect current lives to elsewhere.</p>
           <div class="life-tag"><b>Support</b><span>Support and obligations</span></div>
           <div class="note">Support is broader than remittances: it can involve money, presence, practical work and obligation.</div>
         </div>
@@ -380,8 +381,8 @@ a{color:inherit}
       <article class="story-step life-step" data-state="future" data-index="10">
         <div class="story-copy">
           <div class="step-no">09 · Future</div>
-          <h2>Then ask where the life may yet go.</h2>
-          <p>Ask about future residence, retirement or the next generation, and the geography changes again.</p>
+          <h2>Then ask about the future.</h2>
+          <p>Future residence, retirement and the next generation make another geography visible.</p>
           <div class="life-tag"><b>Future</b><span>Named destinations attached to future horizons</span></div>
           <div class="note">The mapped Future layer aggregates released destinations across horizons. It is not the same object as the survey percentages that follow.</div>
         </div>
@@ -393,8 +394,8 @@ a{color:inherit}
     <section class="release">
       <div class="release-inner">
         <div class="kicker">Same life · different questions</div>
-        <p class="release-line">Change the dimension of the life.<br><em>The geography changes.</em></p>
-        <p class="release-note">Movement, household, recent people ties, support and imagined futures do not necessarily occupy the same spatial field. Yet all belong to the same life.</p>
+        <p class="release-line">Change the question.<br><em>The map changes with it.</em></p>
+        <p class="release-note">Movement. Household. People. Support. Future. These geographies do not necessarily coincide. Yet they belong to the same life.</p>
       </div>
     </section>
 
@@ -403,9 +404,9 @@ a{color:inherit}
         <div class="horizon-head">
           <div>
             <div class="kicker">The future moves</div>
-            <h2>The answer changed with the horizon.</h2>
+            <h2>Time changed the answer to where.</h2>
           </div>
-          <p>The map above brings released future destinations from several horizons into one field. The survey lets us separate those horizons and ask something more specific: how often did a classifiable future lie beyond the current city?</p>
+          <p>Separate the horizons and a pattern sharpens: the farther ahead people looked, the more often the future lay beyond the current city.</p>
         </div>
         <div class="horizon-list" aria-label="Share of classifiable futures beyond the current city by time horizon">
           <div class="horizon-row">
@@ -424,7 +425,7 @@ a{color:inherit}
             <div class="horizon-value">59%<small>Beyond current city</small></div>
           </div>
         </div>
-        <p class="horizon-conclusion">The farther forward the question reached, the more often the answer lay <em>elsewhere.</em></p>
+        <p class="horizon-conclusion">Two years. Ten years. Retirement. <em>The geography of the future moved with time.</em></p>
       </div>
     </section>
 
@@ -433,7 +434,7 @@ a{color:inherit}
         <div class="belonging-label">Belonging without containment</div>
         <div class="belonging-main">
           <h2>But elsewhere did not mean detached from here.</h2>
-          <p>Across the study samples, most respondents said they belonged in their neighbourhood. Local belonging did not pull households, relationships, obligations or imagined futures into one place.</p>
+          <p>Across the study samples, most respondents said they belonged in their neighbourhood. That local belonging could coexist with households, relationships, obligations and imagined futures elsewhere.</p>
           <div class="belonging-number">
             <strong>58.4%</strong>
             <span>of respondents who reported neighbourhood belonging and had at least one classifiable future horizon imagined at least one future in a community of origin, elsewhere in the home country, or another country.</span>
@@ -460,7 +461,7 @@ a{color:inherit}
             <div class="kicker">Who do you turn to?</div>
             <h2 id="routing-title">Different problems produced different routes through the city.</h2>
           </div>
-          <p>Housing, documentation and detention did not produce one common route. The leading responses shifted with the problem.</p>
+          <p>Finding a place to live sent people first to family and friends. Documentation pulled formal institutions to the foreground. Detention mixed both.</p>
         </div>
 
         <div class="route-signatures">
@@ -496,7 +497,7 @@ a{color:inherit}
         </div>
 
         <div class="route-foot">Leading responses shown for each problem. The display is intentionally selective rather than an exhaustive distribution.</div>
-        <p class="route-take">Formal institutions did not disappear. But neither did they organise every problem. <em>The route changed with the problem.</em></p>
+        <p class="route-take">There was no single route through urban life. <em>The route changed with the problem.</em></p>
       </div>
     </section>
   </div>
@@ -513,7 +514,7 @@ a{color:inherit}
         <div class="reprise-copy">
           <div class="step-no">Three cities · 01</div>
           <h2>Accra.</h2>
-          <p>Keep the question fixed: where do the released future destinations reach from the study field?</p>
+          <p>Keep the life layer fixed. Change the city.</p>
           <div class="note">James Town · Madina · Old Fadama. Administrative geometry is not shown where it could not be verified to the same standard.</div>
         </div>
       </article>
@@ -521,7 +522,7 @@ a{color:inherit}
         <div class="reprise-copy">
           <div class="step-no">Three cities · 02</div>
           <h2>Johannesburg.</h2>
-          <p>Same life layer. A different set of neighbourhoods, connections and released destinations.</p>
+          <p>The same question draws a different field from Berea, Diepsloot and Katlehong.</p>
           <div class="note">Berea · Diepsloot · Katlehong</div>
         </div>
       </article>
@@ -529,7 +530,7 @@ a{color:inherit}
         <div class="reprise-copy">
           <div class="step-no">Three cities · 03</div>
           <h2>Nairobi.</h2>
-          <p>The comparison does not make the cities equivalent. It asks what becomes visible when the same spatial question travels.</p>
+          <p>The cities are not equivalents. The comparison asks what becomes visible when the same spatial question travels.</p>
           <div class="note">Kawangware · Kayole · Ongata Rongai</div>
         </div>
       </article>
@@ -537,8 +538,8 @@ a{color:inherit}
         <div class="reprise-copy">
           <div class="step-no">Now you choose</div>
           <h2>Explore the full Atlas.</h2>
-          <p>Change the city. Change its edge. Change the dimension of the life.</p>
-          <div class="note">The guided argument ends here. The Atlas is now yours to explore.</div>
+          <p>Choose a city. Change its edge. Move between Movement, Household, People, Support and Future.</p>
+          <div class="note">The guided essay ends here. The Atlas lets you test the argument for yourself.</div>
           <div class="atlas-actions">
             <button class="atlas-enter" id="atlasEnter" type="button">Enter the Atlas <span>Explore here →</span></button>
             <a class="atlas-full-link" href="atlas.html" target="_blank" rel="noopener">Open full Atlas <span>New tab ↗</span></a>
@@ -676,6 +677,7 @@ a{color:inherit}
   const repriseTitle = document.getElementById('repriseTitle');
   const repriseSteps = [...document.querySelectorAll('.reprise-step')];
   let repriseReady = false;
+  let pendingAtlasRelease = false;
   let repriseLatest = 'accra';
   let repriseScheduled = false;
   let repriseActive = 'accra';
@@ -737,8 +739,11 @@ a{color:inherit}
   const atlasEnter = document.getElementById('atlasEnter');
   if (atlasEnter) {
     atlasEnter.addEventListener('click',() => {
-      if (!repriseReady) return;
       repriseShell.classList.add('atlas-unlocked');
+      if (!repriseReady) {
+        pendingAtlasRelease = true;
+        return;
+      }
       repriseFrame.contentWindow.postMessage({source:'urban-temporalities-essay',release:true},'*');
     });
   }
@@ -746,7 +751,12 @@ a{color:inherit}
   window.addEventListener('message', e => {
     if(e.source === repriseFrame.contentWindow && e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready'){
       repriseReady = true;
-      sendReprise(repriseLatest);
+      if (pendingAtlasRelease) {
+        pendingAtlasRelease = false;
+        repriseFrame.contentWindow.postMessage({source:'urban-temporalities-essay',release:true},'*');
+      } else {
+        sendReprise(repriseLatest);
+      }
     }
   });
 })();
