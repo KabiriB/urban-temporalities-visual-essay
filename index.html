@@ -127,9 +127,68 @@ a{color:inherit}
 .archive-quote blockquote{font:400 clamp(48px,6vw,96px)/.92 var(--serif);letter-spacing:-.04em;margin:0;max-width:900px}
 .archive-quote blockquote em{font-style:normal;color:var(--gold)}
 .archive-context{font:400 clamp(18px,1.45vw,23px)/1.5 var(--serif);color:#aab6b1;max-width:650px;margin-top:34px}
-.build-marker{padding:7vh 0;background:#050b0c;border-top:1px solid var(--line)}
-.build-marker .inner{width:min(900px,calc(100% - 42px));margin:auto;color:#788681;font-size:9px;line-height:1.65;letter-spacing:.13em;text-transform:uppercase}
-footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26px 24px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#65746f;display:flex;justify-content:space-between;gap:24px}
+.routing-argument{padding:12vh 0 13vh;background:#eee8dc;color:#17201e;border-top:1px solid rgba(23,32,30,.12)}
+.routing-inner{width:min(1120px,calc(100% - 42px));margin:auto}
+.routing-head{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:end;margin-bottom:60px}
+.routing-head h2{font-size:clamp(48px,5.8vw,88px);line-height:.91;margin:14px 0 0}
+.routing-head p{font:400 clamp(19px,1.6vw,25px)/1.5 var(--serif);color:#4d5652;margin:0;max-width:650px}
+.route-signatures{border-top:1px solid rgba(23,32,30,.20)}
+.route-signature{display:grid;grid-template-columns:240px 1fr;gap:48px;padding:38px 0;border-bottom:1px solid rgba(23,32,30,.16)}
+.route-problem .num{font-size:9px;font-weight:780;letter-spacing:.16em;text-transform:uppercase;color:#9a7027;margin-bottom:12px}
+.route-problem h3{font:400 clamp(25px,2.3vw,35px)/1.08 var(--serif);margin:0;color:#17201e}
+.route-bars{display:grid;gap:12px}
+.route-bar{display:grid;grid-template-columns:150px minmax(0,1fr) 54px;gap:14px;align-items:center}
+.route-label{font-size:11px;color:#49514e}
+.route-track{height:4px;background:rgba(23,32,30,.10);overflow:hidden}
+.route-fill{height:100%;width:var(--v);background:#a97922}
+.route-fill.formal{background:#597da4}
+.route-fill.none{background:#8f9793}
+.route-value{font-size:10px;color:#5e6763;text-align:right}
+.route-foot{margin-top:24px;font-size:9px;line-height:1.6;letter-spacing:.08em;text-transform:uppercase;color:#7b837f}
+.route-take{font:400 clamp(30px,3.1vw,48px)/1.12 var(--serif);margin:58px 0 0;max-width:900px}
+.route-take em{font-style:normal;color:#96681c}
+
+.reprise-shell{position:relative;background:#030809}
+.reprise-map{height:100svh;position:sticky;top:0;z-index:1;overflow:hidden;background:#030809}
+.reprise-map iframe{display:block;width:100%;height:100%;border:0;pointer-events:none;background:#030809}
+.reprise-map:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(3,8,9,.72) 0%,rgba(3,8,9,.34) 28%,rgba(3,8,9,.06) 52%,transparent 72%);transition:opacity .7s ease}
+.reprise-title{position:absolute;z-index:3;left:28px;top:24px;font-size:9px;font-weight:760;letter-spacing:.18em;text-transform:uppercase;color:#aeb9b5;transition:opacity .5s ease}
+.reprise-title strong{color:#ecd08f}
+.reprise-source{position:absolute;z-index:3;right:22px;bottom:18px;font-size:8px;letter-spacing:.11em;text-transform:uppercase;color:#778682;transition:opacity .5s ease}
+.reprise-steps{position:relative;z-index:4;margin-top:-100svh;width:min(560px,43vw);padding:58svh 0 18svh 5vw;pointer-events:none}
+.reprise-step{min-height:84svh;display:flex;align-items:center;opacity:.27;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease}
+.reprise-step.active{opacity:1;transform:none}
+.reprise-copy{width:min(465px,100%);padding:23px 24px;background:rgba(4,12,13,.80);border-left:1px solid rgba(232,189,105,.66);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);transition:opacity .5s ease,transform .5s ease}
+.reprise-copy h2{font:400 clamp(42px,4.3vw,68px)/.94 var(--serif);letter-spacing:-.04em;margin:0 0 17px}
+.reprise-copy p{font:400 clamp(18px,1.5vw,23px)/1.43 var(--serif);color:#d0d9d5;margin:0}
+.reprise-copy .note{font-size:9px;line-height:1.55;letter-spacing:.07em;color:#8d9b96;margin-top:16px}
+.release-step{min-height:100svh}
+.release-step .reprise-copy{border-left:0;background:rgba(3,9,10,.64)}
+.release-step .reprise-copy h2{font-size:clamp(49px,5vw,78px)}
+.reprise-shell.atlas-unlocked .reprise-map iframe{pointer-events:auto}
+.reprise-shell.atlas-unlocked .reprise-map:after,
+.reprise-shell.atlas-unlocked .reprise-title,
+.reprise-shell.atlas-unlocked .reprise-source{opacity:0}
+.reprise-shell.atlas-unlocked .release-step .reprise-copy{opacity:0;transform:translateY(-10px);pointer-events:none}
+.atlas-open{position:absolute;z-index:6;right:18px;top:18px;display:none;text-decoration:none;padding:10px 14px;border:1px solid rgba(255,255,255,.26);background:rgba(4,12,13,.80);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#eee9df}
+.reprise-shell.atlas-unlocked .atlas-open{display:block}
+
+.final-close{min-height:100svh;position:relative;display:flex;align-items:flex-end;background:url("assets/nairobi-motion.jpg") 55% center/cover no-repeat;color:#f4efe5}
+.final-close:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,8,.92),rgba(3,8,8,.52) 56%,rgba(3,8,8,.14)),linear-gradient(0deg,rgba(3,8,8,.94),rgba(3,8,8,.16) 68%)}
+.final-inner{position:relative;z-index:2;width:min(1180px,calc(100% - 50px));margin:auto;padding:12vh 0 8vh}
+.final-inner h2{font:400 clamp(52px,6.5vw,100px)/.91 var(--serif);letter-spacing:-.045em;margin:22px 0 0;max-width:1080px}
+.final-inner h2 em{display:block;font-style:normal;color:var(--gold);margin-top:12px}
+
+.methods{background:#07100f;color:#9daba5;padding:52px 0 38px;font-size:12px}
+.methods .container{width:min(1120px,calc(100% - 42px));margin:auto}
+.methods details{border-top:1px solid #2d3a36;border-bottom:1px solid #2d3a36;padding:17px 0}
+.methods summary{cursor:pointer;color:#e4e9e6;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.methods-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;padding-top:22px}
+.methods p{margin:0 0 12px}.methods strong{color:#e3e8e5}
+.ack{margin-top:30px;padding-top:25px;border-top:1px solid #2d3a36;max-width:930px}
+.ack h3{font:700 10px/1.2 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:#e3e8e5;margin:0 0 10px}
+.credit{margin-top:28px;padding-top:22px;border-top:1px solid #202c29;display:flex;justify-content:space-between;gap:24px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#667671}
+.site-footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26px 24px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#65746f;display:flex;justify-content:space-between;gap:24px}
 
 @media(max-width:800px){
   .hero-inner{width:calc(100% - 32px);padding-bottom:48px}
@@ -158,8 +217,23 @@ footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26p
   .belonging-number span{display:block;margin-top:18px}
   .archive-interruption{min-height:0;padding:90px 0}
   .archive-meta{max-width:300px}
-  footer{display:block;line-height:1.6}
-  footer div+div{margin-top:8px}
+  .routing-argument{padding:88px 0}
+  .routing-head,.route-signature{grid-template-columns:1fr;gap:25px}
+  .route-signature{padding:30px 0}
+  .route-bar{grid-template-columns:110px minmax(0,1fr) 48px;gap:10px}
+  .reprise-map{height:46svh;z-index:3}
+  .reprise-map:after{background:linear-gradient(0deg,rgba(3,8,9,.26),transparent 60%,rgba(3,8,9,.08))}
+  .reprise-title{left:14px;top:12px;font-size:8px}
+  .reprise-source{display:none}
+  .reprise-steps{z-index:2;margin-top:0;width:100%;padding:0 18px 20px;background:#061011;pointer-events:auto}
+  .reprise-step{min-height:54svh;align-items:flex-start;padding:48px 0 62px;opacity:.45;transform:none}
+  .reprise-copy{width:100%;max-width:none;background:transparent!important;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0 0 0 18px}
+  .release-step{min-height:62svh}
+  .reprise-shell.atlas-unlocked .release-step{min-height:82svh}
+  .atlas-open{top:auto;right:12px;bottom:12px}
+  .methods-grid{grid-template-columns:1fr}
+  .credit,.site-footer{display:block;line-height:1.6}
+  .credit div+div,.site-footer div+div{margin-top:8px}
 }
 @media(max-width:520px){
   .hero{min-height:92svh}
@@ -370,15 +444,137 @@ footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26p
       </div>
     </section>
 
-    <section class="build-marker">
-      <div class="inner">Development build · completed through the first archival interruption. Routing, three-city reprise, Atlas release and closing sequence remain intentionally unbuilt until this narrative movement is reviewed.</div>
+    <section class="routing-argument" aria-labelledby="routing-title">
+      <div class="routing-inner">
+        <div class="routing-head">
+          <div>
+            <div class="kicker">Who do you turn to?</div>
+            <h2 id="routing-title">Different problems produced different routes through the city.</h2>
+          </div>
+          <p>Housing, documentation and detention did not activate one common pathway. The leading responses shifted with the problem.</p>
+        </div>
+
+        <div class="route-signatures">
+          <article class="route-signature">
+            <div class="route-problem"><div class="num">01 · Housing</div><h3>I need a place to live.</h3></div>
+            <div class="route-bars">
+              <div class="route-bar"><div class="route-label">Family</div><div class="route-track"><div class="route-fill" style="--v:38.2%"></div></div><div class="route-value">38.2%</div></div>
+              <div class="route-bar"><div class="route-label">Friend</div><div class="route-track"><div class="route-fill" style="--v:35.3%"></div></div><div class="route-value">35.3%</div></div>
+              <div class="route-bar"><div class="route-label">Partner</div><div class="route-track"><div class="route-fill" style="--v:8.6%"></div></div><div class="route-value">8.6%</div></div>
+              <div class="route-bar"><div class="route-label">Nowhere</div><div class="route-track"><div class="route-fill none" style="--v:5.9%"></div></div><div class="route-value">5.9%</div></div>
+            </div>
+          </article>
+
+          <article class="route-signature">
+            <div class="route-problem"><div class="num">02 · Documentation</div><h3>I need legal documents.</h3></div>
+            <div class="route-bars">
+              <div class="route-bar"><div class="route-label">Government ministry</div><div class="route-track"><div class="route-fill formal" style="--v:20.5%"></div></div><div class="route-value">20.5%</div></div>
+              <div class="route-bar"><div class="route-label">Court / police</div><div class="route-track"><div class="route-fill formal" style="--v:14.1%"></div></div><div class="route-value">14.1%</div></div>
+              <div class="route-bar"><div class="route-label">Government agency</div><div class="route-track"><div class="route-fill formal" style="--v:12.8%"></div></div><div class="route-value">12.8%</div></div>
+              <div class="route-bar"><div class="route-label">Family</div><div class="route-track"><div class="route-fill" style="--v:11.6%"></div></div><div class="route-value">11.6%</div></div>
+            </div>
+          </article>
+
+          <article class="route-signature">
+            <div class="route-problem"><div class="num">03 · Detention</div><h3>Someone close is detained.</h3></div>
+            <div class="route-bars">
+              <div class="route-bar"><div class="route-label">Family</div><div class="route-track"><div class="route-fill" style="--v:31.3%"></div></div><div class="route-value">31.3%</div></div>
+              <div class="route-bar"><div class="route-label">Friend</div><div class="route-track"><div class="route-fill" style="--v:21.1%"></div></div><div class="route-value">21.1%</div></div>
+              <div class="route-bar"><div class="route-label">Court</div><div class="route-track"><div class="route-fill formal" style="--v:13.2%"></div></div><div class="route-value">13.2%</div></div>
+              <div class="route-bar"><div class="route-label">Lawyer</div><div class="route-track"><div class="route-fill formal" style="--v:7.6%"></div></div><div class="route-value">7.6%</div></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="route-foot">Leading responses shown for each problem. The display is intentionally selective rather than an exhaustive distribution.</div>
+        <p class="route-take">The point is not that formal institutions disappear. It is that <em>the route changes with the problem.</em></p>
+      </div>
     </section>
   </div>
+
+  <section class="reprise-shell" id="reprise" aria-label="Three-city reprise and Atlas release">
+    <div class="reprise-map">
+      <iframe id="repriseMap" src="atlas.html?story=1" tabindex="-1" title="Atlas of Urban Elsewheres comparing future geographies across Accra, Johannesburg and Nairobi"></iframe>
+      <div class="reprise-title" id="repriseTitle"><strong>Accra</strong> · Future horizons</div>
+      <div class="reprise-source">Same question · same life layer · different urban field</div>
+      <a class="atlas-open" href="atlas.html" target="_blank" rel="noopener">Open full Atlas ↗</a>
+    </div>
+    <div class="reprise-steps">
+      <article class="reprise-step active" data-reprise="accra">
+        <div class="reprise-copy">
+          <div class="step-no">Three cities · 01</div>
+          <h2>Accra.</h2>
+          <p>Keep the question fixed: where do released future destinations reach from the study field?</p>
+          <div class="note">James Town · Madina · Old Fadama. Administrative geometry is not shown where it could not be verified to the same standard.</div>
+        </div>
+      </article>
+      <article class="reprise-step" data-reprise="johannesburg">
+        <div class="reprise-copy">
+          <div class="step-no">Three cities · 02</div>
+          <h2>Johannesburg.</h2>
+          <p>Same life layer. A different set of neighbourhoods, connections and released destinations.</p>
+          <div class="note">Berea · Diepsloot · Katlehong</div>
+        </div>
+      </article>
+      <article class="reprise-step" data-reprise="nairobi">
+        <div class="reprise-copy">
+          <div class="step-no">Three cities · 03</div>
+          <h2>Nairobi.</h2>
+          <p>The comparison does not make the cities equivalent. It asks what becomes visible when the same spatial question travels.</p>
+          <div class="note">Kawangware · Kayole · Ongata Rongai</div>
+        </div>
+      </article>
+      <article class="reprise-step release-step" data-reprise="release">
+        <div class="reprise-copy">
+          <div class="step-no">Now you choose</div>
+          <h2>Explore the urban elsewheres.</h2>
+          <p>Change the city. Change its edge. Change the dimension of the life.</p>
+          <div class="note">The authored argument ends here. The Atlas now becomes yours to inspect.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="final-close" aria-labelledby="final-line">
+    <div class="final-inner">
+      <div class="kicker">At the close of this phase</div>
+      <h2 id="final-line">A boundary can tell us where a jurisdiction stops.<em>It cannot tell us where a life stops.</em></h2>
+    </div>
+    <div class="photo-credit">Photograph · Loren Landau</div>
+  </section>
 </main>
 
-<footer>
+<section class="methods">
+  <div class="container">
+    <details>
+      <summary>About the research · how to read the evidence</summary>
+      <div class="methods-grid">
+        <div>
+          <p><strong>Study frame.</strong> This visual essay draws on survey, qualitative and spatial work across nine neighbourhoods in Accra, Johannesburg and Nairobi. The raw survey file contains 1,644 records; the descriptive geography used here retains 1,643 records with a valid study city and exactly one valid study neighbourhood. Item-specific denominators vary.</p>
+          <p><strong>Qualitative archive.</strong> The archive contains 110 interview and focus-group transcripts. Quotations are anonymous. Nairobi excerpts use the English translations supplied in the reviewed transcripts. Laughter is shown only where recorded in the transcript.</p>
+          <p><strong>City edges.</strong> Administrative jurisdiction, Africapolis 2020 built-up morphology and a 2015 modelled functional urban area are kept separate because they answer different questions. The functional layer is a harmonised model, not observed commuting.</p>
+        </div>
+        <div>
+          <p><strong>Life geography.</strong> Maps show aggregates rather than individual trajectories. A place appears only when at least five unique respondents are represented; otherwise locations are combined at country level or withheld. Curves indicate relational reach, not literal travel routes.</p>
+          <p><strong>Future orientation.</strong> The 58.4% measure counts locally belonging respondents with at least one classifiable future horizon who located at least one future in a community of origin, elsewhere in the home country or another country. The mapped Future layer is a different object: named destinations that passed spatial and disclosure checks.</p>
+          <p><strong>Scope.</strong> The nine neighbourhoods were purposively selected. The visual essay describes patterns within the study rather than city-wide or continental prevalence.</p>
+        </div>
+      </div>
+    </details>
+    <div class="ack">
+      <h3>Acknowledgements</h3>
+      <p>This research was undertaken as part of the <em>Atlas of Uncertainty</em> project at the African Centre for Migration &amp; Society (ACMS), University of the Witwatersrand, in collaboration with the Wits–Oxford Mobility Governance Lab. The research was supported by the Mellon Foundation and the National Research Foundation of South Africa.</p>
+    </div>
+    <div class="credit">
+      <div>Kabiri N. Bule · Urban Temporalities · Accra · Johannesburg · Nairobi</div>
+      <div>Photography · Loren Landau · Interactive atlas · Atlas of Urban Elsewheres</div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
   <div>Kabiri N. Bule · Urban Temporalities · ACMS</div>
-  <div>Development build · not the public main branch</div>
+  <div>Final ACMS edition · development branch</div>
 </footer>
 
 <script>
@@ -459,9 +655,77 @@ footer{background:#050b0c;border-top:1px solid rgba(255,255,255,.07);padding:26p
   }
 
   window.addEventListener('message', e => {
-    if (e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready') {
+    if (e.source === frame.contentWindow && e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready') {
       atlasReady = true;
       send(latest);
+    }
+  });
+
+  const repriseFrame = document.getElementById('repriseMap');
+  const repriseShell = document.getElementById('reprise');
+  const repriseTitle = document.getElementById('repriseTitle');
+  const repriseSteps = [...document.querySelectorAll('.reprise-step')];
+  let repriseReady = false;
+  let repriseLatest = 'accra';
+  let repriseScheduled = false;
+  let repriseActive = 'accra';
+
+  const repriseStates = {
+    accra:{source:'urban-temporalities-essay',city:'Accra',boundaries:['morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
+    johannesburg:{source:'urban-temporalities-essay',city:'Johannesburg',boundaries:['admin','morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
+    nairobi:{source:'urban-temporalities-essay',city:'Nairobi',boundaries:['admin','morph','fua'],activeBoundary:'fua',life:true,lifeLayer:'Future'},
+    release:{source:'urban-temporalities-essay',release:true}
+  };
+  const repriseLabels = {
+    accra:'<strong>Accra</strong> · Future horizons',
+    johannesburg:'<strong>Johannesburg</strong> · Future horizons',
+    nairobi:'<strong>Nairobi</strong> · Future horizons',
+    release:'<strong>Atlas of Urban Elsewheres</strong>'
+  };
+
+  function sendReprise(name){
+    repriseLatest = name;
+    repriseTitle.innerHTML = repriseLabels[name] || repriseLabels.accra;
+    repriseShell.classList.toggle('atlas-unlocked',name === 'release');
+    if (!repriseReady || !repriseStates[name]) return;
+    repriseFrame.contentWindow.postMessage(repriseStates[name],'*');
+  }
+
+  function activateReprise(step){
+    repriseSteps.forEach(s => s.classList.toggle('active',s === step));
+    sendReprise(step.dataset.reprise);
+  }
+
+  function chooseRepriseStep(){
+    repriseScheduled = false;
+    const targetY = window.innerWidth <= 800 ? window.innerHeight * .72 : window.innerHeight * .50;
+    let best = repriseSteps[0], bestDistance = Infinity;
+    for(const step of repriseSteps){
+      const r = step.getBoundingClientRect();
+      const distance = Math.abs((r.top + r.height * .5) - targetY);
+      if(distance < bestDistance){bestDistance = distance; best = step;}
+    }
+    const next = best.dataset.reprise;
+    if(next !== repriseActive){
+      repriseActive = next;
+      activateReprise(best);
+    }
+  }
+
+  function scheduleReprise(){
+    if(repriseScheduled) return;
+    repriseScheduled = true;
+    requestAnimationFrame(chooseRepriseStep);
+  }
+
+  window.addEventListener('scroll',scheduleReprise,{passive:true});
+  window.addEventListener('resize',scheduleReprise);
+  scheduleReprise();
+
+  window.addEventListener('message', e => {
+    if(e.source === repriseFrame.contentWindow && e.data && e.data.source === 'urban-temporalities-atlas' && e.data.type === 'ready'){
+      repriseReady = true;
+      sendReprise(repriseLatest);
     }
   });
 })();
