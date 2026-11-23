@@ -303,27 +303,52 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     if (!bb) return;
     map.fitBounds(bb,{
       padding:mapPadding(),
-      duration:REDUCE_MOTION ? 0 : 1450,
+      duration:REDUCE_MOTION ? 0 : 1750,
       maxZoom:9.0,
-      easing:t => 1 - Math.pow(1 - t,3)
+      easing:t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2
     });
   }
 
   function storyBoundaries(list, active, noFit){
     const selected = Array.isArray(list) ? list : [];
     const chosen = active || selected[selected.length - 1] || activeBoundary;
+    const previousSelected = storySelectedBoundaries.slice();
+    const previousActive = activeBoundary;
+
     storySelectedBoundaries = selected.slice();
     activeBoundary = chosen;
     makeBoundaryLayersVisible();
 
+    // Keep the departing edge visible while the incoming one arrives.
+    // This avoids the momentary visual blank that reads as a blink.
     ['admin','morph','fua'].forEach(b => {
-      const shown = selected.includes(b) && !(b === 'admin' && !C().adminAvailable);
-      setBoundaryOpacity(b,shown,b === chosen);
+      const wasShown = previousSelected.includes(b) && !(b === 'admin' && !C().adminAvailable);
+      const willShow = selected.includes(b) && !(b === 'admin' && !C().adminAvailable);
+      if (willShow) {
+        const holdActive = b === chosen || (b === previousActive && previousActive !== chosen);
+        setBoundaryOpacity(b,true,holdActive);
+      } else if (wasShown) {
+        setBoundaryOpacity(b,true,b === previousActive);
+      } else {
+        setBoundaryOpacity(b,false,false);
+      }
     });
 
-    syncPressed();
-    updateAccessibleSummary();
-    if (!noFit && selected.length) fitStoryBoundary(chosen);
+    if (!noFit && selected.length && chosen !== previousActive) {
+      setTimeout(()=>fitStoryBoundary(chosen),REDUCE_MOTION?0:110);
+    }
+
+    const settle = () => {
+      ['admin','morph','fua'].forEach(b => {
+        const shown = selected.includes(b) && !(b === 'admin' && !C().adminAvailable);
+        setBoundaryOpacity(b,shown,b === chosen);
+      });
+      syncPressed();
+      updateAccessibleSummary();
+    };
+
+    if (REDUCE_MOTION) settle();
+    else setTimeout(settle,420);
   }
 
   function clearBoundaries(){
