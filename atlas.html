@@ -415,8 +415,26 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     },REDUCE_MOTION?0:280);
   }
 
+  function releaseAtlas(){
+    document.body.classList.remove('story-mode');
+    map.scrollZoom.disable();
+    if(window.innerWidth<=760){
+      map.dragPan.disable();
+      map.touchZoomRotate.disable();
+    }
+    updateCityUI();
+    syncPressed();
+    updateAccessibleSummary();
+    setTimeout(()=>map.resize(),80);
+    window.parent.postMessage({source:'urban-temporalities-atlas',type:'released'},'*');
+  }
+
   function applyStoryState(d){
     if (!d || d.source !== 'urban-temporalities-essay') return;
+    if (d.release === true) {
+      releaseAtlas();
+      return;
+    }
     if (d.city && d.city !== activeCity) switchCity(d.city);
 
     if (d.life === false && lifeOn) exitStoryLife();
