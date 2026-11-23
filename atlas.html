@@ -380,34 +380,52 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
 
   let storyLifeToken = 0;
 
-  function setStoryLifeOpacity(show,duration){
+  function storyLifeOpacityExpression(base,level){
+    if(typeof base==='number') return base*level;
+    return ['*',base,level];
+  }
+
+  function setStoryLifePresence(level,duration){
     const sparse=(LIFE()[activeLife]?.features||[]).length<=2;
     const dur=REDUCE_MOTION?0:duration;
+    const arcBase=sparse
+      ? ['match',['get','weight'],4,.96,3,.90,2,.84,.78]
+      : ['match',['get','weight'],4,.86,3,.72,2,.56,.42];
+
     for(let i=0;i<3;i++){
       const id='life-arcs-'+i;
       if(map.getLayer(id)){
         map.setPaintProperty(id,'line-opacity-transition',{duration:dur,delay:0});
-        map.setPaintProperty(id,'line-opacity',show
-          ? (sparse?['match',['get','weight'],4,.96,3,.90,2,.84,.78]:['match',['get','weight'],4,.86,3,.72,2,.56,.42])
-          : 0);
+        map.setPaintProperty(id,'line-opacity',storyLifeOpacityExpression(arcBase,level));
       }
     }
     if(map.getLayer('life-halo')){
       map.setPaintProperty('life-halo','circle-opacity-transition',{duration:dur,delay:0});
-      map.setPaintProperty('life-halo','circle-opacity',show?(sparse?.28:.16):0);
+      map.setPaintProperty('life-halo','circle-opacity',(sparse?.28:.16)*level);
     }
     if(map.getLayer('life-core')){
       map.setPaintProperty('life-core','circle-opacity-transition',{duration:dur,delay:0});
-      map.setPaintProperty('life-core','circle-opacity',show?.96:0);
+      map.setPaintProperty('life-core','circle-opacity',.96*level);
     }
     if(map.getLayer('life-country')){
       map.setPaintProperty('life-country','circle-opacity-transition',{duration:dur,delay:0});
-      map.setPaintProperty('life-country','circle-opacity',show?.96:0);
+      map.setPaintProperty('life-country','circle-opacity',.96*level);
     }
     if(map.getLayer('life-label')){
       map.setPaintProperty('life-label','text-opacity-transition',{duration:dur,delay:0});
-      map.setPaintProperty('life-label','text-opacity',show?.96:0);
+      map.setPaintProperty('life-label','text-opacity',.96*level);
     }
+  }
+
+  function fitStoryLife(which){
+    const bb=boundsFor(LIFE()[which],true);
+    if(!bb)return;
+    map.fitBounds(bb,{
+      padding:lifePadding(),
+      duration:REDUCE_MOTION?0:1650,
+      maxZoom:9.0,
+      easing:t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2
+    });
   }
 
   function revealStoryLife(layer){
@@ -417,27 +435,30 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     document.getElementById('lifeBtn').textContent='Return to city';
     syncPressed();
     setLayerData(activeLife);
-    setStoryLifeOpacity(false,0);
-    fitLife(activeLife);
+    setStoryLifePresence(.12,0);
+    fitStoryLife(activeLife);
     storyBoundaries(storySelectedBoundaries,activeBoundary,true);
-    requestAnimationFrame(()=>setStoryLifeOpacity(true,760));
+    requestAnimationFrame(()=>setStoryLifePresence(1,820));
     updateAccessibleSummary();
   }
 
   function switchStoryLife(layer){
     if(!lifeOn || layer===activeLife) return;
     const token=++storyLifeToken;
-    setStoryLifeOpacity(false,260);
+
+    // Never empty the map completely. Dim the outgoing geography,
+    // swap data at low presence, then resolve the new geography.
+    setStoryLifePresence(.12,300);
     setTimeout(()=>{
       if(token!==storyLifeToken) return;
       activeLife=layer;
       setLayerData(activeLife);
-      setStoryLifeOpacity(false,0);
-      fitLife(activeLife);
-      requestAnimationFrame(()=>setStoryLifeOpacity(true,680));
+      setStoryLifePresence(.12,0);
+      fitStoryLife(activeLife);
+      requestAnimationFrame(()=>setStoryLifePresence(1,780));
       storyBoundaries(storySelectedBoundaries,activeBoundary,true);
       updateAccessibleSummary();
-    },REDUCE_MOTION?0:280);
+    },REDUCE_MOTION?0:320);
   }
 
   function releaseAtlas(){
@@ -454,6 +475,41 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
     window.parent.postMessage({source:'urban-temporalities-atlas',type:'released'},'*');
   }
 
+  function switchStoryCity(which){
+    if(which===activeCity) return;
+    const targetLife=activeLife;
+    const hadLife=lifeOn;
+
+    if(hadLife) setStoryLifePresence(.10,300);
+
+    const go=()=>{
+      activeCity=which;
+      if(activeBoundary==='admin'&&!C().adminAvailable) activeBoundary='morph';
+      updateCityUI();
+
+      const c=C();
+      map.getSource('admin').setData(c.adminAvailable?c.admin:EMPTY);
+      map.getSource('morph').setData(c.morph);
+      map.getSource('fua').setData(c.fua);
+      map.getSource('sites').setData(c.sites);
+
+      if(hadLife){
+        activeLife=targetLife;
+        setLayerData(activeLife);
+        setStoryLifePresence(.10,0);
+        storyBoundaries(storySelectedBoundaries,activeBoundary,true);
+        fitStoryLife(activeLife);
+        requestAnimationFrame(()=>setStoryLifePresence(1,820));
+      }else if(storySelectedBoundaries.length){
+        storyBoundaries(storySelectedBoundaries,activeBoundary,false);
+      }
+      updateAccessibleSummary();
+    };
+
+    if(REDUCE_MOTION) go();
+    else setTimeout(go,320);
+  }
+
   function applyStoryState(d){
     if (!d || d.source !== 'urban-temporalities-essay') return;
     if (d.release === true) {
@@ -465,7 +521,7 @@ document.querySelectorAll('[data-boundary]').forEach(b=>b.addEventListener('clic
       if(window.innerWidth<=760) map.dragPan.enable();
       map.resize();
     }
-    if (d.city && d.city !== activeCity) switchCity(d.city);
+    if (d.city && d.city !== activeCity) switchStoryCity(d.city);
 
     if (d.life === false && lifeOn) exitStoryLife();
 
